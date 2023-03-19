@@ -1,10 +1,13 @@
 package com.example.dbms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,25 +20,34 @@ public class MainActivity extends AppCompatActivity {
 
     SQLiteDatabase db;
 
+    CardView customerCardView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btSave = findViewById(R.id.button);
-        tvName = findViewById(R.id.tvName);
-        tvAge = findViewById(R.id.tvAge);
-        btCreateTable = findViewById(R.id.createTable);
+        customerCardView=findViewById(R.id.customerCardView);
 
-        db = openOrCreateDatabase("Demo", MODE_PRIVATE, null);
-
-        btSave.setOnClickListener(v -> {
-            saveData(tvName.getText().toString(), Integer.parseInt(tvAge.getText().toString()));
+        customerCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,HomePage.class);
+                startActivity(i);
+            }
         });
 
-        btCreateTable.setOnClickListener(v -> {
-            createTable("Table2");
-        });
+
+//
+//        db = openOrCreateDatabase("Demo", MODE_PRIVATE, null);
+//
+//        btSave.setOnClickListener(v -> {
+//            saveData(tvName.getText().toString(), Integer.parseInt(tvAge.getText().toString()));
+//        });
+//
+//        btCreateTable.setOnClickListener(v -> {
+//            createTable("Table2");
+//        });
     }
 
     public void saveData(String name, int age){
