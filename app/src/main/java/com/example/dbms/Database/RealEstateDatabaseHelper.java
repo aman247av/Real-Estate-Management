@@ -1,4 +1,4 @@
-package com.example.dbms;
+package com.example.dbms.Database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -53,7 +53,6 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void authenticateUser(Context context, String username, String password){
-
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = String.format(Locale.UK, "SELECT username,password FROM Customer WHERE username=\"%s\";", username);
@@ -61,6 +60,8 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
 
         int checkUser = c.getCount();
+
+        c.moveToFirst();
 
         if(checkUser > 0){
             String realPassword = c.getString(1);

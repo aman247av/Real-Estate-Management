@@ -2,14 +2,12 @@ package com.example.dbms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Locale;
+import com.example.dbms.Database.RealEstateDatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,14 +30,11 @@ public class LoginActivity extends AppCompatActivity {
 
         db = new RealEstateDatabaseHelper(this);
 
-        String username = tvUsername.getText().toString();
-        String password = tvPassword.getText().toString();
-
         btSignIn.setOnClickListener(v -> {
             if(loginType.equals("customer")){
-                loginCustomer(username, password);
+                loginCustomer(tvUsername.getText().toString().trim(), tvPassword.getText().toString().trim());
             } else if (loginType.equals("agent")) {
-                loginAgent(username, password);
+                loginAgent(tvUsername.getText().toString().trim(), tvPassword.getText().toString().trim());
             }
         });
     }
