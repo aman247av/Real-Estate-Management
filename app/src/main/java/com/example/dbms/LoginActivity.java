@@ -53,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean loginSuccessful = db.authenticateUser(this, username, password);
 
         if(loginSuccessful){
-
+            Intent intent = new Intent(LoginActivity.this, HomePage.class);
+            startActivity(intent);
         }
     }
 }
