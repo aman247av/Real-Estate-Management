@@ -2,6 +2,7 @@ package com.example.dbms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,7 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean loginSuccessful = db.authenticateUser(this, username, password);
 
         if(loginSuccessful){
-
+            Intent intent = new Intent(LoginActivity.this, HomePage.class);
+            startActivity(intent);
         }
     }
 

@@ -71,8 +71,6 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
             if(password.equals(realPassword)){
                 Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, HomePage.class);
-                context.startActivity(intent);
                 db.close();
                 return true;
             }
