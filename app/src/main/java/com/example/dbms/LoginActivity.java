@@ -40,10 +40,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginCustomer(String username, String password){
-        db.authenticateUser(this, username, password);
+        boolean loginSuccessful = db.authenticateUser(this, username, password);
+
+        if(loginSuccessful){
+
+        }
     }
 
     public void loginAgent(String username, String password){
-        db.authenticateUser(this, username, password);
+        boolean loginSuccessful = db.authenticateUser(this, username, password);
+
+        if(loginSuccessful){
+
+        }
     }
 }

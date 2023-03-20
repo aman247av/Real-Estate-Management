@@ -1,12 +1,15 @@
 package com.example.dbms.Database;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.dbms.HomePage;
 
 import java.util.Locale;
 
@@ -52,7 +55,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void authenticateUser(Context context, String username, String password){
+    public boolean authenticateUser(Context context, String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = String.format(Locale.UK, "SELECT username,password FROM Customer WHERE username=\"%s\";", username);
@@ -67,15 +70,22 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
             String realPassword = c.getString(1);
 
             if(password.equals(realPassword)){
-                //Code for processes after sign in
-                Toast.makeText(context, "User signed in successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, HomePage.class);
+                context.startActivity(intent);
+                db.close();
+                return true;
             }
             else{
                 Toast.makeText(context, "Wrong password!", Toast.LENGTH_SHORT).show();
+                db.close();
+                return false;
             }
         }
         else{
             Toast.makeText(context, "This username does not exist", Toast.LENGTH_SHORT).show();
+            db.close();
+            return false;
         }
     }
 }
