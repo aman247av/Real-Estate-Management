@@ -1,10 +1,12 @@
 package com.example.dbms;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,12 +39,18 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HomePageAdapter.ViewHolder holder, int position) {
-        holder.tvPrice.setText(propDetailsList.get(position).getSelling_price() + "");
+        holder.tvPrice.setText("₹" + propDetailsList.get(position).getSelling_price() + "");
         holder.tvCategory.setText(propDetailsList.get(position).getCategory());
         holder.tvType.setText(propDetailsList.get(position).getType());
         holder.tvPropertName.setText(propDetailsList.get(position).getPropertyName());
         holder.tvAreaAbout.setText(propDetailsList.get(position).getArea_size() + " sq. m");
         holder.tvAddress.setText(propDetailsList.get(position).getHouse_no() + ", " + propDetailsList.get(position).getStreet() + ", " + propDetailsList.get(position).getDistrict() + ", " + propDetailsList.get(position).getCity());
+
+        holder.whole_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(context, PropertyDetails.class);
+            intent.putExtra("property_id", propDetailsList.get(position).getProperty_id());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -55,6 +63,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ivProperty;
+        RelativeLayout whole_btn;
         TextView tvPrice,tvCategory,tvType,tvPropertName,tvAreaAbout,tvAddress;
         public ViewHolder(View view) {
             super(view);
@@ -65,7 +74,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
             tvPropertName = (TextView) view.findViewById(R.id.tvPropertName);
             tvAreaAbout = (TextView) view.findViewById(R.id.tvAreaAbout);
             tvAddress = (TextView) view.findViewById(R.id.tvAddress);
-
+            whole_btn = view.findViewById(R.id.whole_btn);
 
         }
     }
