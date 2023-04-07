@@ -61,7 +61,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="4dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="$ 20,000" />
+                android:text="₹ 20,000" />
 
 
             <LinearLayout
@@ -317,7 +317,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:backgroundTint="#4D23C5B5"
-                android:layout_weight="33"
+                android:layout_weight="48"
                 android:gravity="center"
                 android:padding="8dp"
                 android:textSize="20sp"
@@ -334,7 +334,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="8dp"
-                android:layout_weight="33"
+                android:layout_weight="48"
                 android:background="@drawable/border"
                 android:backgroundTint="#4D23C5B5"
                 android:gravity="center"
@@ -344,24 +344,6 @@
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/email_24" />
 
-
-
-
-
-
-            <TextView
-                android:id="@+id/tvChat"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="8dp"
-                android:layout_weight="33"
-                android:textSize="20sp"
-                android:background="@drawable/border"
-                android:backgroundTint="#4D23C5B5"
-                android:text="Chat"
-                android:textColor="@color/black"
-                app:drawableLeftCompat="@drawable/chat_24" />
 
 
 
