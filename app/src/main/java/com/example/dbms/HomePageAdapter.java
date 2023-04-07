@@ -40,9 +40,9 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
         holder.tvPrice.setText(propDetailsList.get(position).getSelling_price() + "");
         holder.tvCategory.setText(propDetailsList.get(position).getCategory());
         holder.tvType.setText(propDetailsList.get(position).getType());
-//        holder.tvPropertName.setText(propDetailsList.get(position).);
-        holder.tvAreaAbout.setText(propDetailsList.get(position).getArea_size() + "");
-        holder.tvAddress.setText(propDetailsList.get(position).getHouse_no() + " " + propDetailsList.get(position).getStreet() + " " + propDetailsList.get(position).getDistrict() + " " + propDetailsList.get(position).getCity());
+        holder.tvPropertName.setText(propDetailsList.get(position).getPropertyName());
+        holder.tvAreaAbout.setText(propDetailsList.get(position).getArea_size() + " sq. m");
+        holder.tvAddress.setText(propDetailsList.get(position).getHouse_no() + ", " + propDetailsList.get(position).getStreet() + ", " + propDetailsList.get(position).getDistrict() + ", " + propDetailsList.get(position).getCity());
     }
 
     @Override

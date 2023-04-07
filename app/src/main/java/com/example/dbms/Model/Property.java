@@ -4,6 +4,7 @@ import android.media.Image;
 
 public class Property {
     int property_id;
+    String propertyName;
     String type;
     int area_size;
     int bedroom_count;
@@ -20,8 +21,9 @@ public class Property {
     String state;
     int pincode;
 
-    public Property(int property_id, String type, int area_size, int bedroom_count, String category, int construction_year, int rent, int selling_price, String status, String house_no, String street, String district, String city, String state, int pincode) {
+    public Property(int property_id, String propertyName, String type, int area_size, int bedroom_count, String category, int construction_year, int rent, int selling_price, String status, String house_no, String street, String district, String city, String state, int pincode) {
         this.property_id = property_id;
+        this.propertyName = propertyName;
         this.type = type;
         this.area_size = area_size;
         this.bedroom_count = bedroom_count;
@@ -44,6 +46,14 @@ public class Property {
 
     public void setProperty_id(int property_id) {
         this.property_id = property_id;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
 
     public String getType() {
