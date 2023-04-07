@@ -27,9 +27,9 @@
             android:id="@+id/ivProperty"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            android:background="@color/black"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            android:scaleType="centerInside"
+            android:background="@drawable/scenic"
+             />
 
         <TextView
             android:id="@+id/tvPrice"
@@ -39,7 +39,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:padding="10dp"
-            android:text="$ 20,000" />
+            android:text="₹ 20,000" />
 
         <LinearLayout
             android:id="@id/details"
