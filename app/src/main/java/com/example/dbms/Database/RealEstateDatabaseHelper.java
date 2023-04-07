@@ -1,5 +1,6 @@
 package com.example.dbms.Database;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,8 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.dbms.HomePage;
+import com.example.dbms.Model.Property;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Vector;
 
 public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
@@ -31,17 +36,34 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE_CUSTOMER = "CREATE TABLE Customer(" +
-                "customer_id int PRIMARY KEY," +
-                "name varchar(255), " +
-                "contact int, " +
-                "e_mail varchar(255), " +
-                "dob varchar(11), " +
-                "username varchar(50), " +
-                "password varchar(50)" +
+        String CREATE_TABLE_CUSTOMER = "CREATE TABLE Customer (\n" +
+                "  customer_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "  email VARCHAR(255) NOT NULL,\n" +
+                "  name VARCHAR(255) NOT NULL,\n" +
+                "  password VARCHAR(255) NOT NULL,\n" +
+                "  contact VARCHAR(15) NOT NULL,\n" +
+                "  DOB DATE NOT NULL\n" +
                 ");";
 
+        String CREATE_TABLE_PROPERTY = "CREATE TABLE Property (property_id int PRIMARY KEY, " +
+                " type varchar(20)," +
+                " area_size int," +
+                " bedroom_count int," +
+                " image mediumblob," +
+                " category varchar(50)," +
+                " construction_year int," +
+                " rent int," +
+                " selling_price int," +
+                " status varchar(15)," +
+                " house_no varchar(10)," +
+                " street varchar(50)," +
+                " district varchar(50)," +
+                " city varchar(25)," +
+                " state varchar(20)," +
+                " pincode int(10));";
+
         db.execSQL(CREATE_TABLE_CUSTOMER);
+        db.execSQL(CREATE_TABLE_PROPERTY);
     }
 
     @Override
@@ -71,19 +93,45 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
             if(password.equals(realPassword)){
                 Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
-                db.close();
+
                 return true;
             }
             else{
                 Toast.makeText(context, "Wrong password!", Toast.LENGTH_SHORT).show();
-                db.close();
+
                 return false;
             }
         }
         else{
             Toast.makeText(context, "This username does not exist", Toast.LENGTH_SHORT).show();
-            db.close();
+
             return false;
         }
+    }
+
+    @SuppressLint("Range")
+    public List<Property> getData(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT * FROM Property");
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        List<Property> propertyList = new ArrayList<>();
+
+        while (c.moveToNext()){
+            Property property;
+            if(c.getString(c.getColumnIndex("type")).equals("rent")) {
+                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("rent")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")));
+            }
+            else{
+                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")));
+            }
+            propertyList.add(property);
+        }
+
+        return propertyList;
     }
 }

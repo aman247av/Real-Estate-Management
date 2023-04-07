@@ -53,7 +53,7 @@
                 android:text="Gomati Nagar, Lucknow" />
 
             <TextView
-                android:id="@+id/tvPrice"
+                android:id="@+id/tvPriceDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"

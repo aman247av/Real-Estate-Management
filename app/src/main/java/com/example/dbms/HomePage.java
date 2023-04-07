@@ -6,14 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.dbms.Database.RealEstateDatabaseHelper;
+import com.example.dbms.Model.Property;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList propImgList = new ArrayList<>(Arrays.asList(R.drawable.flats_24));
-    ArrayList propDetailsList = new ArrayList<>(Arrays.asList("Aprna Flats","Sema House","SaiRam Flats"));
+
+    RecyclerView.Adapter adapter;
+
+    RealEstateDatabaseHelper db;
 
 
     @Override
@@ -23,14 +29,18 @@ public class HomePage extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        recyclerView = (RecyclerView) findViewById(R.id.rvProperty);
+        recyclerView = findViewById(R.id.rvProperty);
 
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
 
-        HomePageAdapter adapter = new HomePageAdapter(HomePage.this, propImgList, propDetailsList);
-        recyclerView.setAdapter(adapter);
+        db = new RealEstateDatabaseHelper(this);
 
+        List<Property> propertyList = db.getData();
+
+        adapter = new HomePageAdapter(this, propertyList);
+
+        recyclerView.setAdapter(adapter);
 
     }
 }

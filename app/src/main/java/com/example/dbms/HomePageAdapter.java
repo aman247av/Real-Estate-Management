@@ -9,17 +9,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
+
+import com.example.dbms.Model.Property;
+
+import java.util.List;
 
 
 public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHolder> {
-    ArrayList propImgList, propDetailsList;
+    List<Property> propDetailsList;
     Context context;
 
 
-    public HomePageAdapter(Context context, ArrayList propImgList, ArrayList propDetailsList) {
+    public HomePageAdapter(Context context, List<Property> propDetailsList) {
         this.context = context;
-        this.propImgList = propImgList;
         this.propDetailsList = propDetailsList;
     }
 
@@ -35,9 +37,12 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HomePageAdapter.ViewHolder holder, int position) {
-
-//        int res = (int) propDetailsList.get(position);
-//            holder.tvPropertName.setText(propDetailsList.get(res));
+        holder.tvPrice.setText(propDetailsList.get(position).getSelling_price() + "");
+        holder.tvCategory.setText(propDetailsList.get(position).getCategory());
+        holder.tvType.setText(propDetailsList.get(position).getType());
+//        holder.tvPropertName.setText(propDetailsList.get(position).);
+        holder.tvAreaAbout.setText(propDetailsList.get(position).getArea_size() + "");
+        holder.tvAddress.setText(propDetailsList.get(position).getHouse_no() + " " + propDetailsList.get(position).getStreet() + " " + propDetailsList.get(position).getDistrict() + " " + propDetailsList.get(position).getCity());
     }
 
     @Override
