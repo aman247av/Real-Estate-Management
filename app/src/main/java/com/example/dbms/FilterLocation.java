@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +16,7 @@ import com.example.dbms.Model.Location;
 
 import java.util.ArrayList;
 
-public class FilterLocation extends AppCompatActivity {
+public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private RecyclerView RVLocation;
     private LocationAdapter adapter;
@@ -83,11 +84,19 @@ public class FilterLocation extends AppCompatActivity {
         locationModelArrayList.add(new Location("Kashi"));
 
 
-        adapter = new LocationAdapter(locationModelArrayList, FilterLocation.this);
+        adapter = new LocationAdapter(locationModelArrayList, FilterLocation.this,this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         RVLocation.setHasFixedSize(true);
 
         RVLocation.setLayoutManager(manager);
         RVLocation.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(String value) {
+        Intent intent = new Intent();
+        intent.putExtra("value", value);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
