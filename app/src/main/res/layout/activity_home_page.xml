@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#23C5B5"
+        android:background="#62CDFF"
         android:orientation="vertical"
         android:paddingHorizontal="12dp"
 
