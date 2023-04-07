@@ -15,11 +15,13 @@ import java.util.ArrayList;
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
 
+    private OnItemClick mCallback;
     private ArrayList<Location> locationModelArrayList;
 
 
-    public LocationAdapter(ArrayList<Location> locationModelArrayList, Context context) {
+    public LocationAdapter(ArrayList<Location> locationModelArrayList, Context context,OnItemClick listener) {
         this.locationModelArrayList = locationModelArrayList;
+        mCallback = listener;
     }
 
 
@@ -42,6 +44,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
 
         Location model = locationModelArrayList.get(position);
         holder.locName.setText(model.getLocationName());
+        holder.locName.setOnClickListener(view -> {mCallback.onClick(model.getLocationName()); holder.locName.setBackgroundResource(R.color.btnColor);});
 
     }
 
