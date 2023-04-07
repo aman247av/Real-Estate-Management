@@ -42,18 +42,18 @@ public class Filters extends AppCompatActivity {
         TextView tv_3BHK = findViewById(R.id.tv_3BHK);
 
 
-        // Create an array of minimum budget values
+
         String[] minBudgets = {"$100", "$200", "$300", "$400", "$500", "More than $500"};
 
-// Create an array of maximum budget values
+
         String[] maxBudgets = {"$500", "$1000", "$2000", "$3000", "$4000", "More than $4000"};
 
-// Create an adapter for the spinners
+
         ArrayAdapter<String> minAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, minBudgets);
         minAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_min_budget.setAdapter(minAdapter);
 
-// Create an adapter for the maximum budget spinner
+
         ArrayAdapter<String> maxAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, maxBudgets);
         maxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_max_budget.setAdapter(maxAdapter);
