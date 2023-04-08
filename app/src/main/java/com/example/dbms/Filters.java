@@ -6,17 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Filters extends AppCompatActivity {
     private final static int MY_REQUEST_CODE = 1;
@@ -24,7 +18,7 @@ public class Filters extends AppCompatActivity {
     TextView tvRent, tvBuy;
     Button btnFilter;
     Spinner spinner_max_budget, spinner_min_budget;
-    HashMap<String, String> hashMapFilter = new HashMap<>();
+    Bundle bundle = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,40 +49,47 @@ public class Filters extends AppCompatActivity {
                 startActivityForResult(i, MY_REQUEST_CODE);
             }
         });
+        tvBuy.setBackgroundResource(R.color.btnColor);
+        bundle.putString("Purpose","buy");
+        tvHouse.setBackgroundResource(R.color.btnColor);
+        bundle.putString("Type","house");
+        tv_1BHK.setBackgroundResource(R.color.btnColor);
+        bundle.putString("Bedrooms","1");
+
 
         tvBuy.setOnClickListener(view -> {
-            hashMapFilter.put("Purpose","Buy");
+            bundle.putString("Purpose","buy");
             tvBuy.setBackgroundResource(R.color.btnColor);
             tvRent.setBackgroundResource(R.color.white);
         });
 
         tvRent.setOnClickListener(view -> {
-            hashMapFilter.put("Purpose","Rent");
+            bundle.putString("Purpose","Rent");
             tvRent.setBackgroundResource(R.color.btnColor);
             tvBuy.setBackgroundResource(R.color.white);
         });
 
         tvHouse.setOnClickListener(view -> {
-            hashMapFilter.put("Type","House");
+            bundle.putString("Type","house");
             tvHouse.setBackgroundResource(R.color.btnColor);
             tvFlat.setBackgroundResource(R.color.white);
         });
 
         tvFlat.setOnClickListener(view -> {
-            hashMapFilter.put("Type","Flat");
+            bundle.putString("Type","flat");
             tvFlat.setBackgroundResource(R.color.btnColor);
             tvHouse.setBackgroundResource(R.color.white);
         });
 
         tv_1BHK.setOnClickListener(view -> {
-            hashMapFilter.put("Bedrooms","1");
+            bundle.putString("Bedrooms","1");
             tv_1BHK.setBackgroundResource(R.color.btnColor);
             tv_2BHK.setBackgroundResource(R.color.white);
             tv_3BHK.setBackgroundResource(R.color.white);
         });
 
         tv_2BHK.setOnClickListener(view -> {
-            hashMapFilter.put("Bedrooms","2");
+            bundle.putString("Bedrooms","2");
             tv_2BHK.setBackgroundResource(R.color.btnColor);
             tv_1BHK.setBackgroundResource(R.color.white);
             tv_3BHK.setBackgroundResource(R.color.white);
@@ -96,7 +97,7 @@ public class Filters extends AppCompatActivity {
         });
 
         tv_3BHK.setOnClickListener(view -> {
-            hashMapFilter.put("Bedrooms","3");
+            bundle.putString("Bedrooms","3");
 
             tv_1BHK.setBackgroundResource(R.color.white);
             tv_2BHK.setBackgroundResource(R.color.white);
@@ -129,11 +130,24 @@ public class Filters extends AppCompatActivity {
                 String[] minBudget = spinner_min_budget.getSelectedItem().toString().split(" ");
                 String[] maxBudget = spinner_max_budget.getSelectedItem().toString().split(" ");
 
-                if(Integer.parseInt(minBudget[minBudget.length-1])< Integer.parseInt(maxBudget[maxBudget.length-1])) {
-                        hashMapFilter.put("minBudget", minBudget[minBudget.length - 1]);
-                        hashMapFilter.put("maxBudget", maxBudget[maxBudget.length - 1]);
+                if(!tvSearchLoc.getText().toString().isEmpty()) {
+                    if (Integer.parseInt(minBudget[minBudget.length - 1]) < Integer.parseInt(maxBudget[maxBudget.length - 1])) {
+                        bundle.putString("minBudget", minBudget[minBudget.length - 1]);
+                        bundle.putString("maxBudget", maxBudget[maxBudget.length - 1]);
+                        bundle.putString("city", tvSearchLoc.getText().toString().trim());
+
+                        System.out.println(bundle);
+
+                        Intent intent = new Intent();
+                        intent.putExtra("filterDetails", bundle);
+                        setResult(RESULT_OK, intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(Filters.this, "Invalid Budget Range!!!", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(Filters.this, "Invalid Budget Range!!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Filters.this, "Invalid Location", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -147,7 +161,6 @@ public class Filters extends AppCompatActivity {
             if (requestCode == MY_REQUEST_CODE) {
                 if (data != null) {
                     tvSearchLoc.setText(data.getStringExtra("value"));
-                    hashMapFilter.put("Location",data.getStringExtra("value"));
                 }
             }
         }

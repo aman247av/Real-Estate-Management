@@ -39,7 +39,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull HomePageAdapter.ViewHolder holder, int position) {
-        holder.tvPrice.setText("₹" + propDetailsList.get(position).getSelling_price() + "");
+        holder.tvPrice.setText("₹ " + propDetailsList.get(position).getSelling_price() + "");
         holder.tvCategory.setText(propDetailsList.get(position).getCategory());
         holder.tvType.setText(propDetailsList.get(position).getType());
         holder.tvPropertName.setText(propDetailsList.get(position).getPropertyName());

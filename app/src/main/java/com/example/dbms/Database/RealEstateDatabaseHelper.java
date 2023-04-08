@@ -2,23 +2,19 @@ package com.example.dbms.Database;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.database.CursorWindowCompat;
 
-import com.example.dbms.HomePage;
 import com.example.dbms.Model.Agent;
 import com.example.dbms.Model.Property;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Vector;
 
 public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
@@ -137,6 +133,57 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return propertyList;
+    }
+
+    public List<String> getLocations(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT DISTINCT city FROM Property");
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        List<String> locations = new ArrayList<>();
+
+        locations.add(c.getString(0));
+
+        while (c.moveToNext()){
+            locations.add(c.getString(0));
+        }
+
+        return locations;
+    }
+
+    public List<Property> getFilteredData(String city, String type, String bedrooms, String category, int minPrice, int maxPrice){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT * FROM Property WHERE city=\"%s\" AND type=\"%s\" AND no_of_bedrooms=\"%s\" AND category=\"%s\" AND selling_price >= %d AND selling_price <= %d", city, type,bedrooms,category,minPrice,maxPrice);
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        List<Property> propertyList = new ArrayList<>();
+
+        while (c.moveToNext()){
+            if(propertyList.isEmpty()){
+                c.moveToFirst();
+            }
+            Property property;
+            if(c.getString(c.getColumnIndex("type")).equals("rent")) {
+                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("rent")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")));
+            }
+            else{
+                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")));
+            }
+            propertyList.add(property);
+        }
+
+        db.close();
+
+        return propertyList;
+
     }
 
     public Agent getPropertyAgent(Property property){

@@ -1,16 +1,20 @@
 package com.example.dbms;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
 import com.example.dbms.Model.Property;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity {
@@ -21,6 +25,8 @@ public class HomePage extends AppCompatActivity {
 
     RealEstateDatabaseHelper db;
 
+    TextView tvSearchBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,8 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         getSupportActionBar().hide();
+
+        tvSearchBar = findViewById(R.id.tvSearch);
 
         recyclerView = findViewById(R.id.rvProperty);
 
@@ -42,5 +50,30 @@ public class HomePage extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+        tvSearchBar.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, Filters.class);
+            startActivityForResult(intent, 0);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            if(requestCode == 0){
+                if(data != null){
+                    Bundle map = data.getBundleExtra("filterDetails");
+
+                    List<Property> filteredData = db.getFilteredData(map.getString("city"), map.getString("Purpose"),map.getString("Bedrooms"), map.getString("Type"), Integer.parseInt(map.getString("minBudget")), Integer.parseInt(map.getString("maxBudget")));
+
+                    System.out.println(filteredData);
+
+                    adapter = new HomePageAdapter(this, filteredData);
+
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        }
     }
 }

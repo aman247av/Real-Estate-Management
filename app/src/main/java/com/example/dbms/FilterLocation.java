@@ -17,13 +17,14 @@ import com.example.dbms.Model.Location;
 import com.example.dbms.Model.Property;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private RecyclerView RVLocation;
     private LocationAdapter adapter;
-    private List<Property> locationModelArrayList;
+    private List<String> locationModelArrayList;
     private RealEstateDatabaseHelper db;
 
     @Override
@@ -31,10 +32,12 @@ public class FilterLocation extends AppCompatActivity implements OnItemClick{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_location2);
 
+        db = new RealEstateDatabaseHelper(this);
+
         RVLocation = findViewById(R.id.idRVLocation);
         buildRecyclerView();
 
-        db = new RealEstateDatabaseHelper(this);
+
     }
 
     @Override
@@ -62,11 +65,11 @@ public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private void filter(String text) {
 
-        List<Property> filteredlist = new ArrayList<>();
+        List<String> filteredlist = new ArrayList<>();
 
-        for (Property item : locationModelArrayList) {
+        for (String item : locationModelArrayList) {
 
-            if (item.getCity().toLowerCase().contains(text.toLowerCase())) {
+            if (item.toLowerCase().contains(text.toLowerCase())) {
                 filteredlist.add(item);
             }
         }
@@ -79,7 +82,7 @@ public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private void buildRecyclerView() {
 
-        locationModelArrayList = db.getData();
+        locationModelArrayList = db.getLocations();
 
 //        db query fetching all locations
 

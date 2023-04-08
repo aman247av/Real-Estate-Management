@@ -56,11 +56,11 @@ public class PropertyDetails extends AppCompatActivity {
 
         tvPropertyName.setText(property.getPropertyName());
         tvType.setText(property.getType());
-        tvPrice.setText("₹" + property.getSelling_price());
+        tvPrice.setText("₹ " + property.getSelling_price());
         tvLocation.setText(property.getHouse_no() + ", " + property.getStreet() + ", " + property.getDistrict() + ", " + property.getCity());
         tvCategory.setText(property.getCategory());
         tvBHK.setText(property.getBedroom_count() + "");
-        tvArea.setText(property.getArea_size() + "");
+        tvArea.setText(property.getArea_size() + " sq. m");
 
         Agent agent = db.getPropertyAgent(property);
 

@@ -18,16 +18,16 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
 
 
     private OnItemClick mCallback;
-    private List<Property> locationModelArrayList;
+    private List<String> locationModelArrayList;
 
 
-    public LocationAdapter(List<Property> locationModelArrayList, Context context,OnItemClick listener) {
+    public LocationAdapter(List<String> locationModelArrayList, Context context,OnItemClick listener) {
         this.locationModelArrayList = locationModelArrayList;
         mCallback = listener;
     }
 
 
-    public void filterList(List<Property> filterlist) {
+    public void filterList(List<String> filterlist) {
 
         locationModelArrayList = filterlist;
         notifyDataSetChanged();
@@ -44,9 +44,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull LocationAdapter.ViewHolder holder, int position) {
 
-        Property model = locationModelArrayList.get(position);
-        holder.locName.setText(model.getCity());
-        holder.locName.setOnClickListener(view -> {mCallback.onClick(model.getCity()); holder.locName.setBackgroundResource(R.color.btnColor);});
+        String model = locationModelArrayList.get(position);
+        holder.locName.setText(model);
+        holder.locName.setOnClickListener(view -> {mCallback.onClick(model); holder.locName.setBackgroundResource(R.color.btnColor);});
 
     }
 
