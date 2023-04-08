@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.dbms.Database.RealEstateDatabaseHelper;
 import com.example.dbms.Model.Agent;
 import com.example.dbms.Model.Property;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,6 +18,8 @@ import java.util.Locale;
 public class PropertyDetails extends AppCompatActivity {
 
     TextView tvPropertyName, tvLocation, tvPrice, tvCategory, tvType, tvBHK, tvArea, tvAboutAgent;
+
+    FloatingActionButton fabBuy;
 
     RealEstateDatabaseHelper db;
 
@@ -34,6 +37,7 @@ public class PropertyDetails extends AppCompatActivity {
         tvBHK = findViewById(R.id.tvBHK);
         tvArea = findViewById(R.id.tvArea);
         tvAboutAgent = findViewById(R.id.tvAboutAgent);
+        fabBuy = findViewById(R.id.fab_btn);
 
         db = new RealEstateDatabaseHelper(this);
 
@@ -67,6 +71,11 @@ public class PropertyDetails extends AppCompatActivity {
         tvCall=findViewById(R.id.tvCall);
         tvEmail=findViewById(R.id.tvEmail);
 
+        fabBuy.setOnClickListener(view -> {
+            Intent i=new Intent(this,BillingActivity.class);
+            startActivity(i);
+        });
+
         tvCall.setOnClickListener(view -> {
             String phno="";
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
@@ -80,5 +89,7 @@ public class PropertyDetails extends AppCompatActivity {
             intent.setData(data);
             startActivity(intent);
         });
+
+
     }
 }
