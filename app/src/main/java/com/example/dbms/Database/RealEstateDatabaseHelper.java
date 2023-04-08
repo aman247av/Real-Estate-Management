@@ -130,7 +130,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
             propertyList.add(property);
         }
 
-        db.close();
+//        db.close();
 
         return propertyList;
     }
