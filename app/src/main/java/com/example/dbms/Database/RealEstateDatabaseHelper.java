@@ -9,8 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.database.CursorWindowCompat;
 
 import com.example.dbms.HomePage;
+import com.example.dbms.Model.Agent;
 import com.example.dbms.Model.Property;
 
 import java.util.ArrayList;
@@ -93,18 +95,18 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
             if(password.equals(realPassword)){
                 Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
-
+                db.close();
                 return true;
             }
             else{
                 Toast.makeText(context, "Wrong password!", Toast.LENGTH_SHORT).show();
-
+                db.close();
                 return false;
             }
         }
         else{
             Toast.makeText(context, "This username does not exist", Toast.LENGTH_SHORT).show();
-
+            db.close();
             return false;
         }
     }
@@ -132,6 +134,32 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
             propertyList.add(property);
         }
 
+        db.close();
+
         return propertyList;
+    }
+
+    public Agent getPropertyAgent(Property property){
+        Agent agent;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT agent_id FROM Assign WHERE property_id=%d", property.getProperty_id());
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        int agent_id = c.getInt(0);
+
+        String query2 = String.format(Locale.UK, "SELECT * FROM Agent WHERE agent_id=%d", agent_id);
+
+        Cursor c2 = db.rawQuery(query2, null);
+
+        c2.moveToFirst();
+
+        agent = new Agent(c2.getInt(0), c2.getString(1), c2.getString(2), c2.getString(3), c2.getString(4), c2.getString(5));
+
+        return agent;
     }
 }

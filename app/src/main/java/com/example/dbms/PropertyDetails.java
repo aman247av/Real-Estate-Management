@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
+import com.example.dbms.Model.Agent;
 import com.example.dbms.Model.Property;
 
 import java.util.List;
+import java.util.Locale;
 
 public class PropertyDetails extends AppCompatActivity {
 
@@ -52,5 +54,11 @@ public class PropertyDetails extends AppCompatActivity {
         tvCategory.setText(property.getCategory());
         tvBHK.setText(property.getBedroom_count() + "");
         tvArea.setText(property.getArea_size() + "");
+
+        Agent agent = db.getPropertyAgent(property);
+
+        String aboutAgent = String.format(Locale.UK, "Name : %s\nMobile : %s\nE-Mail : %s\nOffice address : %s", agent.getName(),agent.getContact(),agent.getE_mail(),agent.getOffice_address());
+
+        tvAboutAgent.setText(aboutAgent);
     }
 }
