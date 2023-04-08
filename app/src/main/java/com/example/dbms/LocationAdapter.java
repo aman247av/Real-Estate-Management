@@ -9,23 +9,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dbms.Model.Location;
+import com.example.dbms.Model.Property;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
 
     private OnItemClick mCallback;
-    private ArrayList<Location> locationModelArrayList;
+    private List<Property> locationModelArrayList;
 
 
-    public LocationAdapter(ArrayList<Location> locationModelArrayList, Context context,OnItemClick listener) {
+    public LocationAdapter(List<Property> locationModelArrayList, Context context,OnItemClick listener) {
         this.locationModelArrayList = locationModelArrayList;
         mCallback = listener;
     }
 
 
-    public void filterList(ArrayList<Location> filterlist) {
+    public void filterList(List<Property> filterlist) {
 
         locationModelArrayList = filterlist;
         notifyDataSetChanged();
@@ -42,9 +44,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull LocationAdapter.ViewHolder holder, int position) {
 
-        Location model = locationModelArrayList.get(position);
-        holder.locName.setText(model.getLocationName());
-        holder.locName.setOnClickListener(view -> {mCallback.onClick(model.getLocationName()); holder.locName.setBackgroundResource(R.color.btnColor);});
+        Property model = locationModelArrayList.get(position);
+        holder.locName.setText(model.getCity());
+        holder.locName.setOnClickListener(view -> {mCallback.onClick(model.getCity()); holder.locName.setBackgroundResource(R.color.btnColor);});
 
     }
 

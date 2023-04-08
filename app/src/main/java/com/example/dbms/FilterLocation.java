@@ -12,15 +12,19 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.dbms.Database.RealEstateDatabaseHelper;
 import com.example.dbms.Model.Location;
+import com.example.dbms.Model.Property;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private RecyclerView RVLocation;
     private LocationAdapter adapter;
-    private ArrayList<Location> locationModelArrayList;
+    private List<Property> locationModelArrayList;
+    private RealEstateDatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
         RVLocation = findViewById(R.id.idRVLocation);
         buildRecyclerView();
+
+        db = new RealEstateDatabaseHelper(this);
     }
 
     @Override
@@ -56,11 +62,11 @@ public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private void filter(String text) {
 
-        ArrayList<Location> filteredlist = new ArrayList<Location>();
+        List<Property> filteredlist = new ArrayList<>();
 
-        for (Location item : locationModelArrayList) {
+        for (Property item : locationModelArrayList) {
 
-            if (item.getLocationName().toLowerCase().contains(text.toLowerCase())) {
+            if (item.getCity().toLowerCase().contains(text.toLowerCase())) {
                 filteredlist.add(item);
             }
         }
@@ -73,15 +79,9 @@ public class FilterLocation extends AppCompatActivity implements OnItemClick{
 
     private void buildRecyclerView() {
 
-        locationModelArrayList = new ArrayList<Location>();
+        locationModelArrayList = db.getData();
 
 //        db query fetching all locations
-
-        locationModelArrayList.add(new Location("Lucknow"));
-        locationModelArrayList.add(new Location("GHY"));
-        locationModelArrayList.add(new Location("NDLS"));
-        locationModelArrayList.add(new Location("Banaras"));
-        locationModelArrayList.add(new Location("Kashi"));
 
 
         adapter = new LocationAdapter(locationModelArrayList, FilterLocation.this,this);

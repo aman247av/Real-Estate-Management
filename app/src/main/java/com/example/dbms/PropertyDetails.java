@@ -2,6 +2,8 @@ package com.example.dbms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ public class PropertyDetails extends AppCompatActivity {
 
     RealEstateDatabaseHelper db;
 
+    TextView tvCall,tvEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,5 +63,22 @@ public class PropertyDetails extends AppCompatActivity {
         String aboutAgent = String.format(Locale.UK, "Name : %s\nMobile : %s\nE-Mail : %s\nOffice address : %s", agent.getName(),agent.getContact(),agent.getE_mail(),agent.getOffice_address());
 
         tvAboutAgent.setText(aboutAgent);
+
+        tvCall=findViewById(R.id.tvCall);
+        tvEmail=findViewById(R.id.tvEmail);
+
+        tvCall.setOnClickListener(view -> {
+            String phno="";
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:+917317270278"));
+            startActivity(callIntent);
+        });
+
+        tvEmail.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri data = Uri.parse("mailto:recipient@example.com?subject=" + Uri.encode("Property Related Query"));
+            intent.setData(data);
+            startActivity(intent);
+        });
     }
 }
