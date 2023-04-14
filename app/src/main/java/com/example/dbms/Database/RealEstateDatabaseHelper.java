@@ -131,12 +131,15 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query1);
     }
 
-    public void buyProperty(Transactions transactions){
+    public void buyProperty(Transactions transactions, int property_id, int status){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = String.format(Locale.UK, "INSERT INTO Transactions VALUES(%d, %d, %d, \"%s\", \"%s\", %d)", transactions.getTransaction_id(), transactions.getAgent_id(),transactions.getCustomer_id(),transactions.getDateFrom(),transactions.getDateTo(),transactions.getAmount());
 
+        String query1 = String.format(Locale.UK, "UPDATE Property SET status=%d WHERE property_id=%d", status,property_id);
+
         db.execSQL(query);
+        db.execSQL(query1);
     }
 
     @SuppressLint("Range")

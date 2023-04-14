@@ -170,12 +170,12 @@ public class PropertyDetails extends AppCompatActivity {
 
                                         i.putExtra("amount", finalProperty.getRent());
 
-                                        db.buyProperty(transactions);
+                                        db.buyProperty(transactions, finalProperty.getProperty_id(),2);
                                     }
                                     else{
                                         transactions = new Transactions(Integer.parseInt(transaction_id), agent.getAgent_id(), Integer.parseInt(customer_id), String.valueOf(LocalDate.now()), "Present", finalProperty.getSelling_price());
                                         i.putExtra("amount", finalProperty.getSelling_price());
-                                        db.buyProperty(transactions);
+                                        db.buyProperty(transactions, finalProperty.getProperty_id(),1);
                                     }
 
                                     progressDialog.dismiss();

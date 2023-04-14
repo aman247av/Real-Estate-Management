@@ -67,7 +67,15 @@ public class HomePage extends AppCompatActivity {
         } else if (loginType.equals("customer")) {
 
             List<Property> propertyList = db.getData();
-            adapter = new HomePageAdapter(this, propertyList);
+            List<Property> unsoldProperty = new ArrayList<>();
+
+            for (int i = 0; i < propertyList.size(); i++){
+                if(Integer.parseInt(propertyList.get(i).getStatus()) == 0){
+                    unsoldProperty.add(propertyList.get(i));
+                }
+            }
+
+            adapter = new HomePageAdapter(this, unsoldProperty);
             recyclerView.setAdapter(adapter);
             tvSearchBar.setOnClickListener(v -> {
                 Intent intent = new Intent(HomePage.this, Filters.class);
