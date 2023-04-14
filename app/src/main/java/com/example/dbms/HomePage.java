@@ -40,7 +40,7 @@ public class HomePage extends AppCompatActivity {
         tvSearchBar = findViewById(R.id.tvSearch);
 
         recyclerView = findViewById(R.id.rvProperty);
-        FloatingActionButton fabBtnSell = findViewById(R.id.fab_btn);
+        TextView fabBtnSell = findViewById(R.id.tvPreview);
 
         fabBtnSell.setOnClickListener(view -> {
             startActivity(new Intent(this,SellPropActivity.class));

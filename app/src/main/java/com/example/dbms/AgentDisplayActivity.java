@@ -34,12 +34,12 @@ public class AgentDisplayActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         db = new RealEstateDatabaseHelper(this);
-//
-//        List<Agent> propertyList = db.getData();
-//
-//        adapter = new AgentAdapter(this, propertyList);
-//
-//        recyclerView.setAdapter(adapter);
+
+        List<Agent> propertyList = db.getAgentData();
+
+        adapter = new AgentAdapter(this, propertyList);
+
+        recyclerView.setAdapter(adapter);
 
     }
 }

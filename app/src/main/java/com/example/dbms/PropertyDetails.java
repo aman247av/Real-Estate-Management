@@ -1,8 +1,10 @@
 package com.example.dbms;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +26,7 @@ public class PropertyDetails extends AppCompatActivity {
 
     TextView tvPropertyName, tvLocation, tvPrice, tvCategory, tvType, tvBHK, tvArea, tvAboutAgent;
 
-    FloatingActionButton fabBuy;
+    TextView fabBuy;
 
     RealEstateDatabaseHelper db;
 
@@ -59,6 +61,8 @@ public class PropertyDetails extends AppCompatActivity {
             }
         }
 
+        fabBuy.setText(property.getType().toString().equals("rent")?"RENT":"BUY");
+
         tvPropertyName.setText(property.getPropertyName());
         tvType.setText(property.getType());
         tvPrice.setText("₹ " + property.getSelling_price());
@@ -81,23 +85,34 @@ public class PropertyDetails extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         fabBuy.setOnClickListener(view -> {
-            Intent i=new Intent(this,BillingActivity.class);
-            progressDialog.show();
-            long duration= TimeUnit.SECONDS.toMillis(2);
-            new CountDownTimer(duration, 1000) {
-                @Override
-                public void onTick(long l) {
-                    String sDuration=String.format(Locale.ENGLISH,"%02d"
-                            , TimeUnit.MILLISECONDS.toSeconds(l));
-                }
-                @Override
-                public void onFinish() {
-                    progressDialog.dismiss();
-                    finish();
-                    startActivity(i);
-                }
-            }.start();
+//            startActivity(new Intent(this,AgentDisplayActivity.class));
+            new AlertDialog.Builder(this)
+                    .setTitle("Proceed Further")
+                    .setMessage("Do you really want to buy/rent this Property?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Intent i=new Intent(PropertyDetails.this,BillingActivity.class);
+                            progressDialog.show();
+                            long duration= TimeUnit.SECONDS.toMillis(2);
+                            new CountDownTimer(duration, 1000) {
+                                @Override
+                                public void onTick(long l) {
+                                    String sDuration=String.format(Locale.ENGLISH,"%02d"
+                                            , TimeUnit.MILLISECONDS.toSeconds(l));
+                                }
+                                @Override
+                                public void onFinish() {
+                                    progressDialog.dismiss();
+                                    finish();
+                                    startActivity(i);
+                                }
+                            }.start();
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
         });
+
 
         tvCall.setOnClickListener(view -> {
             String phno="";

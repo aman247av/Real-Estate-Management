@@ -224,4 +224,21 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
         return agent;
     }
+
+    public List<Agent> getAgentData(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM Agent";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        List<Agent> agentList = new ArrayList<>();
+        while (c.moveToNext()){
+                Agent agent= new Agent(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5));
+            agentList.add(agent);
+        }
+
+        return agentList;
+    }
+
 }

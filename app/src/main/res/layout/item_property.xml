@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:id="@+id/whole_btn"
         android:background="@drawable/border"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="10dp">
 
 
