@@ -5,19 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.LocaleList;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.example.dbms.Model.Agent;
+import com.example.dbms.Model.Customer;
 import com.example.dbms.Model.Property;
+import com.example.dbms.Model.Transactions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
@@ -110,7 +109,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertProperty(Property property){
+    public void sellProperty(Property property){
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = String.format(Locale.UK, "INSERT INTO Property VALUES(%d, %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d, %d, %d, \"%s\", %d, \"%s\", \"%s\", %d, \"%s\", \"%s\")", property.getProperty_id(), property.getBedroom_count(), property.getHouse_no(), property.getStreet(), property.getDistrict(), property.getCity(), property.getState(), property.getPincode(), property.getRent(), property.getSelling_price(), property.getStatus(), property.getConstruction_year(), property.getCategory(), property.getType(), property.getArea_size(), property.getDateListed(), property.getPropertyName());
@@ -119,6 +118,12 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(query);
         db.execSQL(query1);
+    }
+
+    public void buyProperty(Transactions transactions){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = String.format(Locale.UK, "INSERT INTO Transactions VALUES(%d, %d, %d, \"%s\", \"%s\", %d)", transactions.getTransaction_id(), transactions.getAgent_id(),transactions.getCustomer_id(),transactions.getDateFrom(),transactions.getDateTo(),transactions.getAmount());
     }
 
     @SuppressLint("Range")

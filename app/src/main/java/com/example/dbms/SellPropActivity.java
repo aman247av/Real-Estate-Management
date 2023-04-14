@@ -224,7 +224,7 @@ public class SellPropActivity extends AppCompatActivity {
 
                     Property property = new Property(property_id, hashMap.get("p_name"), hashMap.get("type"), Integer.parseInt(hashMap.get("area_size")), Integer.parseInt(hashMap.get("no_of_bedrooms")), hashMap.get("category"), Integer.parseInt(hashMap.get("year_of_const")), (int) Double.parseDouble(hashMap.get("rent")), (int) Double.parseDouble(hashMap.get("selling_price")), hashMap.get("status"), hashMap.get("house_no"), hashMap.get("street"), hashMap.get("district"), hashMap.get("city"), hashMap.get("state"), Integer.parseInt(hashMap.get("pincode")), hashMap.get("dateListed"));
 
-                    db.insertProperty(property);
+                    db.sellProperty(property);
 
                     Intent intent = new Intent(SellPropActivity.this, HomePage.class);
                     startActivity(intent);
