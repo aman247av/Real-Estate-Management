@@ -39,6 +39,15 @@ public class LoginActivity extends AppCompatActivity {
                 loginCustomer(tvUsername.getText().toString().trim(), tvPassword.getText().toString().trim());
             } else if (loginType.equals("agent")) {
                 loginAgent(tvUsername.getText().toString().trim(), tvPassword.getText().toString().trim());
+            }else if(loginType.equals("admin")){
+                if(tvUsername.getText().toString().trim().equals("admin") && tvPassword.getText().toString().trim().equals("123")){
+                    SharedPreferences.Editor editor = getSharedPreferences(FILENAME, MODE_PRIVATE).edit();
+                    editor.putString("loginType", "admin");
+
+                    editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, AdministratorPanel.class);
+                    startActivity(intent);
+                }
             }
         });
     }

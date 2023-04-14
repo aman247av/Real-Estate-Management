@@ -59,7 +59,8 @@ public class HomePage extends AppCompatActivity {
 
         db = new RealEstateDatabaseHelper(this);
 
-        if(loginType.equals("agent")){
+
+        if(loginType.equals("agent") ){
             List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
@@ -81,8 +82,11 @@ public class HomePage extends AppCompatActivity {
                 Intent intent = new Intent(HomePage.this, Filters.class);
                 startActivityForResult(intent, 0);
             });
+        } else if (loginType.equals("admin")) {
+            List<Property> propertyList = db.getData();
+            adapter = new HomePageAdapter(this, propertyList);
+            recyclerView.setAdapter(adapter);
         }
-
 
 
     }

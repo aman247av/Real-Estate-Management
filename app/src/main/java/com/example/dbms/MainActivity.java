@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     CardView customerCardView;
 
     CardView agentCardView;
+    private Button btnAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
         customerCardView = findViewById(R.id.customerCardView);
         agentCardView = findViewById(R.id.agentCardView);
+        btnAdmin = findViewById(R.id.btnAdm);
+
+        btnAdmin.setOnClickListener(view -> {
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            i.putExtra("loginType", "admin");
+            startActivity(i);
+        });
+
 
         customerCardView.setOnClickListener(view -> {
             Intent i = new Intent(MainActivity.this, LoginActivity.class);

@@ -7,19 +7,7 @@
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/btnAdm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Administrator"
-        android:backgroundTint="#d6d6d6"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:padding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -30,7 +18,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/customerCardView"
+            android:id="@+id/cvProperty"
             android:layout_width="160dp"
             android:layout_height="200dp"
             android:backgroundTint="#d6d6d6"
@@ -52,7 +40,7 @@
                     android:layout_height="64dp"
                     android:layout_weight="80"
                     android:paddingTop="10dp"
-                    app:srcCompat="@drawable/person_24" />
+                    app:srcCompat="@drawable/agent_24" />
 
                 <View
                     android:layout_width="fill_parent"
@@ -65,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="20"
                     android:gravity="center"
-                    android:text="CUSTOMER"
+                    android:text="PROPERTIES"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
@@ -80,7 +68,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/agentCardView"
+            android:id="@+id/cvAgent"
             android:layout_width="160dp"
             android:layout_height="200dp"
             android:backgroundTint="#d6d6d6"
@@ -101,7 +89,7 @@
                     android:layout_height="64dp"
                     android:layout_weight="80"
                     android:paddingTop="10dp"
-                    app:srcCompat="@drawable/agent_24" />
+                    app:srcCompat="@drawable/person_24" />
 
                 <View
                     android:layout_width="fill_parent"
@@ -114,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="20"
                     android:gravity="center"
-                    android:text="AGENT"
+                    android:text="AGENTS"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="20sp" />

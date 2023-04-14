@@ -1,7 +1,10 @@
 package com.example.dbms;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +24,20 @@ import java.util.Random;
 
 public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHolder> {
     List<Property> propDetailsList;
+    public static final String FILENAME = "com.example.dbms.LoginType";
+
     Context context;
+    SharedPreferences preferences;
+    String loginType;
     private final int[] flatsImageResources = {R.drawable.flat1, R.drawable.flat2, R.drawable.flat3, R.drawable.flat4,R.drawable.flat5};
     private final int[] housesImageResources = {R.drawable.house1, R.drawable.house2, R.drawable.house3, R.drawable.house4,R.drawable.house5};
-    private Random mRandom = new Random();
+    private final Random mRandom = new Random();
 
 
     public HomePageAdapter(Context context, List<Property> propDetailsList) {
+        preferences=context.getSharedPreferences(FILENAME,MODE_PRIVATE);
+        loginType=preferences.getString("loginType",null);
+
         this.context = context;
         this.propDetailsList = propDetailsList;
     }
@@ -59,6 +69,12 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
             holder.ivProperty.setImageResource(flatsImageResources[randomIndex]);
         }
 
+        if(loginType.equals("admin") || loginType.equals("agent")){
+            if(propDetailsList.get(position).getStatus().equals("1") || propDetailsList.get(position).getStatus().equals("2")){
+                holder.tvSold.setVisibility(View.VISIBLE);
+            }
+        }
+
         holder.whole_btn.setOnClickListener(v -> {
             Intent intent = new Intent(context, PropertyDetails.class);
             intent.putExtra("property_id", propDetailsList.get(position).getProperty_id());
@@ -78,16 +94,17 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 
         ImageView ivProperty;
         RelativeLayout whole_btn;
-        TextView tvPrice,tvCategory,tvType,tvPropertName,tvAreaAbout,tvAddress;
+        TextView tvPrice,tvCategory,tvType,tvPropertName,tvAreaAbout,tvAddress,tvSold;
         public ViewHolder(View view) {
             super(view);
-            ivProperty = (ImageView) view.findViewById(R.id.ivProperty);
-            tvPrice = (TextView) view.findViewById(R.id.tvPrice);
-            tvCategory = (TextView) view.findViewById(R.id.tvCategory);
-            tvType = (TextView) view.findViewById(R.id.tvType);
-            tvPropertName = (TextView) view.findViewById(R.id.tvPropertName);
-            tvAreaAbout = (TextView) view.findViewById(R.id.tvAreaAbout);
-            tvAddress = (TextView) view.findViewById(R.id.tvAddress);
+            ivProperty = view.findViewById(R.id.ivProperty);
+            tvPrice = view.findViewById(R.id.tvPrice);
+            tvCategory = view.findViewById(R.id.tvCategory);
+            tvType = view.findViewById(R.id.tvType);
+            tvSold = view.findViewById(R.id.tvSold);
+            tvPropertName = view.findViewById(R.id.tvPropertName);
+            tvAreaAbout = view.findViewById(R.id.tvAreaAbout);
+            tvAddress = view.findViewById(R.id.tvAddress);
             whole_btn = view.findViewById(R.id.whole_btn);
 
         }
