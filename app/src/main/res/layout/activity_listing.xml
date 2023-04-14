@@ -9,7 +9,7 @@
     android:layout_margin="20dp"
     app:cardCornerRadius="24dp"
     app:cardElevation="24dp"
-    tools:context=".BillingActivity">
+    tools:context=".ListingActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
             android:backgroundTint="#E2ECEB"
             android:background="@drawable/border"
             android:orientation="horizontal"
-           app:cardCornerRadius="16dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -71,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="50"
-                        android:text="Transaction ID"
+                        android:text="Property ID"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -98,7 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="50"
-                        android:text="Owner Name"
+                        android:text="Agent ID"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -107,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="50"
-                        android:text=": Shilpa Singh"
+                        android:text=": 53412"
                         android:textAlignment="textStart"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -152,7 +152,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="50"
-                        android:text="Purchase Date"
+                        android:text="Listing Date"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -198,12 +198,11 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tvAddress"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="60dp"
             android:layout_marginTop="105dp"
-            android:text="Meet Agent as soon as possible to collect property papers!"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"

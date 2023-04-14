@@ -3,8 +3,10 @@ package com.example.dbms;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class SellPropActivity extends AppCompatActivity {
     private final static int MY_REQUEST_CODE = 1;
@@ -114,7 +118,9 @@ public class SellPropActivity extends AppCompatActivity {
 
 
 
-
+        ProgressDialog progressDialog = new ProgressDialog(SellPropActivity.this);
+        progressDialog.setMessage("Listing Property...");
+        progressDialog.setCancelable(false);
 
 
 
@@ -213,7 +219,30 @@ public class SellPropActivity extends AppCompatActivity {
                 }
                 else{
 
+
+
                     Toast.makeText(SellPropActivity.this, "All OK", Toast.LENGTH_SHORT).show();
+
+
+                    progressDialog.show();
+                    long duration= TimeUnit.SECONDS.toMillis(2);
+                    new CountDownTimer(duration, 1000) {
+                        @Override
+                        public void onTick(long l) {
+                            String sDuration = String.format(Locale.ENGLISH, "%02d"
+                                    , TimeUnit.MILLISECONDS.toSeconds(l));
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                            progressDialog.dismiss();
+                            startActivity(new Intent(SellPropActivity.this,ListingActivity.class));
+                            finish();
+                        }
+                    }.start();
+
+
                 }
                 
                 
