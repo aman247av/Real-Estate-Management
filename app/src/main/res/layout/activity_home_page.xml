@@ -91,31 +91,6 @@
 
             </TextView>
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawableLeft="@drawable/drop_down_24"
-                android:text="Buy"
-                android:textColor="#3C3C3C"
-                android:textSize="20sp"
-                android:paddingHorizontal="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvClear"
-                app:layout_constraintTop_toTopOf="@+id/tvSearch" />
-
-            <TextView
-                android:id="@+id/tvClear"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-                android:drawableStart="@android:drawable/ic_menu_close_clear_cancel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvSearch" />
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

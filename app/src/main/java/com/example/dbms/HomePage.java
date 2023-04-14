@@ -66,10 +66,10 @@ public class HomePage extends AppCompatActivity {
             if(agent!=null){
                 agent_id=agent;
             }
-            Toast.makeText(this, ""+agent+"This"+agent_id, Toast.LENGTH_SHORT).show();
             List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
+            tvSearchBar.setVisibility(View.INVISIBLE);
 
         } else if (loginType.equals("customer")) {
 
@@ -89,10 +89,11 @@ public class HomePage extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             });
         } else if (loginType.equals("admin")) {
-            Toast.makeText(this, ""+agent+"that", Toast.LENGTH_SHORT).show();
+
             List<Property> propertyList = db.getData();
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
+            tvSearchBar.setVisibility(View.INVISIBLE);
         }
 
 
