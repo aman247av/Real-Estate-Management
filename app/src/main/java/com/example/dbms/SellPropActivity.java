@@ -70,7 +70,7 @@ public class SellPropActivity extends AppCompatActivity {
     
         final String[] type = {"sale"};
         tvSell.setOnClickListener(view -> {
-            hashMap.put("type","buy");
+            hashMap.put("type","sale");
             type[0] ="sale";
             tvSell.setBackgroundResource(R.color.btnColor);
             tvRent.setBackgroundResource(R.color.white);

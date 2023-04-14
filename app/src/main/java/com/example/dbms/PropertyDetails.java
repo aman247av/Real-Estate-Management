@@ -191,13 +191,13 @@ public class PropertyDetails extends AppCompatActivity {
         tvCall.setOnClickListener(view -> {
             String phno="";
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:+917317270278"));
+            callIntent.setData(Uri.parse("tel:+91"+agent.getContact()));
             startActivity(callIntent);
         });
 
         tvEmail.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri data = Uri.parse("mailto:recipient@example.com?subject=" + Uri.encode("Property Related Query"));
+            Uri data = Uri.parse("mailto:" + agent.getE_mail() + "?subject=" + Uri.encode("Property Related Query"));
             intent.setData(data);
             startActivity(intent);
         });
