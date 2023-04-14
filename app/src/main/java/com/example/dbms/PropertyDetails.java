@@ -108,6 +108,7 @@ public class PropertyDetails extends AppCompatActivity {
 
                         public void onClick(DialogInterface dialog, int whichButton) {
                             Intent i=new Intent(PropertyDetails.this,BillingActivity.class);
+
                             progressDialog.show();
                             long duration= TimeUnit.SECONDS.toMillis(2);
                             new CountDownTimer(duration, 1000) {
@@ -128,6 +129,14 @@ public class PropertyDetails extends AppCompatActivity {
 
                                     Transactions transactions;
 
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                                    i.putExtra("transaction_id", transaction_id);
+                                    i.putExtra("agent_name", agent.getName());
+                                    i.putExtra("purchase_date", sdf.format(new Date()));
+                                    i.putExtra("customer_id", customer_id);
+
+
                                     if(finalProperty.getType().equals("rent")){
 
                                         Calendar c = Calendar.getInstance();
@@ -136,15 +145,18 @@ public class PropertyDetails extends AppCompatActivity {
 
                                         c.add(Calendar.MONTH, 6);
 
-                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
                                         String date = sdf.format(c.getTime());
 
                                         transactions = new Transactions(Integer.parseInt(transaction_id), agent.getAgent_id(), Integer.parseInt(customer_id), String.valueOf(LocalDate.now()), date, finalProperty.getRent());
+
+                                        i.putExtra("amount", finalProperty.getRent());
 
                                         db.buyProperty(transactions);
                                     }
                                     else{
                                         transactions = new Transactions(Integer.parseInt(transaction_id), agent.getAgent_id(), Integer.parseInt(customer_id), String.valueOf(LocalDate.now()), "Present", finalProperty.getSelling_price());
+                                        i.putExtra("amount", finalProperty.getSelling_price());
                                         db.buyProperty(transactions);
                                     }
 
