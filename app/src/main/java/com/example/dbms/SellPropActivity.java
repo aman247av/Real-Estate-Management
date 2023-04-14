@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,9 +14,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dbms.Database.RealEstateDatabaseHelper;
+import com.example.dbms.Model.Property;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class SellPropActivity extends AppCompatActivity {
     private final static int MY_REQUEST_CODE = 1;
@@ -25,6 +30,8 @@ public class SellPropActivity extends AppCompatActivity {
     HashMap<String,String> hashMap=new HashMap<>();
 
     Bundle bundle = new Bundle();
+
+    RealEstateDatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,7 @@ public class SellPropActivity extends AppCompatActivity {
         TextView tvFlat = findViewById(R.id.tvFlat);
         EditText etYOC = findViewById(R.id.etYOC);
         
-
+        db = new RealEstateDatabaseHelper(this);
 
 
         TextView tv_1BHK = findViewById(R.id.tv_1BHK);
@@ -141,12 +148,12 @@ public class SellPropActivity extends AppCompatActivity {
                         tvSearchLoc.requestFocus();
                     }
                     else{
-                        hashMap.put("house_no",address[0]);
-                        hashMap.put("street",address[1]);
-                        hashMap.put("district",address[2]);
-                        hashMap.put("city",address[3]);
-                        hashMap.put("state",address[4]);
-                        hashMap.put("pincode",address[5]);
+                        hashMap.put("house_no",address[0].trim());
+                        hashMap.put("street",address[1].trim());
+                        hashMap.put("district",address[2].trim());
+                        hashMap.put("city",address[3].trim());
+                        hashMap.put("state",address[4].trim());
+                        hashMap.put("pincode",address[5].trim());
                     }
                 }
 
@@ -167,7 +174,7 @@ public class SellPropActivity extends AppCompatActivity {
                         hashMap.put("rent", String.valueOf((Integer.parseInt(etPrice.getText().toString()) * 0.002)));
                     } else {
                         hashMap.put("rent", etPrice.getText().toString());
-                        hashMap.put("selling_price", String.valueOf((Integer.parseInt(etPrice.getText().toString()) * 20)));
+                        hashMap.put("selling_price", String.valueOf(Integer.parseInt(etPrice.getText().toString()) * 200));
                     }
                 }
 
@@ -212,6 +219,15 @@ public class SellPropActivity extends AppCompatActivity {
                     Toast.makeText(SellPropActivity.this, "Incomplete Details!", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    int property_id = Integer.parseInt(String.format(Locale.UK,"%s%s", hashMap.get("house_no"), hashMap.get("pincode")));
+
+                    Property property = new Property(property_id, hashMap.get("p_name"), hashMap.get("type"), Integer.parseInt(hashMap.get("area_size")), Integer.parseInt(hashMap.get("no_of_bedrooms")), hashMap.get("category"), Integer.parseInt(hashMap.get("year_of_const")), (int) Double.parseDouble(hashMap.get("rent")), (int) Double.parseDouble(hashMap.get("selling_price")), hashMap.get("status"), hashMap.get("house_no"), hashMap.get("street"), hashMap.get("district"), hashMap.get("city"), hashMap.get("state"), Integer.parseInt(hashMap.get("pincode")), hashMap.get("dateListed"));
+
+                    db.insertProperty(property);
+
+                    Intent intent = new Intent(SellPropActivity.this, HomePage.class);
+                    startActivity(intent);
+                    finish();
 
                     Toast.makeText(SellPropActivity.this, "All OK", Toast.LENGTH_SHORT).show();
                 }

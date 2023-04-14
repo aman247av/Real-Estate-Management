@@ -2,6 +2,8 @@ package com.example.dbms.Model;
 
 import android.media.Image;
 
+import java.util.Date;
+
 public class Property {
     int property_id;
     String propertyName;
@@ -18,10 +20,11 @@ public class Property {
     String street;
     String district;
     String city;
+    String dateListed;
     String state;
     int pincode;
 
-    public Property(int property_id, String propertyName, String type, int area_size, int bedroom_count, String category, int construction_year, int rent, int selling_price, String status, String house_no, String street, String district, String city, String state, int pincode) {
+    public Property(int property_id, String propertyName, String type, int area_size, int bedroom_count, String category, int construction_year, int rent, int selling_price, String status, String house_no, String street, String district, String city, String state, int pincode, String dateListed) {
         this.property_id = property_id;
         this.propertyName = propertyName;
         this.type = type;
@@ -38,6 +41,7 @@ public class Property {
         this.city = city;
         this.state = state;
         this.pincode = pincode;
+        this.dateListed = dateListed;
     }
 
     public int getProperty_id() {
@@ -174,5 +178,13 @@ public class Property {
 
     public void setPincode(int pincode) {
         this.pincode = pincode;
+    }
+
+    public String getDateListed() {
+        return dateListed;
+    }
+
+    public void setDateListed(String dateListed) {
+        this.dateListed = dateListed;
     }
 }
