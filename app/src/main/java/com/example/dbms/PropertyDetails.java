@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
@@ -33,15 +36,20 @@ public class PropertyDetails extends AppCompatActivity {
     TextView tvPropertyName, tvLocation, tvPrice, tvCategory, tvType, tvBHK, tvArea, tvAboutAgent;
 
     TextView fabBuy;
+    private final int[] flatsImageResources = {R.drawable.flat1, R.drawable.flat2, R.drawable.flat3, R.drawable.flat4,R.drawable.flat5};
+    private final int[] housesImageResources = {R.drawable.house1, R.drawable.house2, R.drawable.house3, R.drawable.house4,R.drawable.house5};
 
     RealEstateDatabaseHelper db;
 
     TextView tvCall,tvEmail;
+    private ImageView ivPropImag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_property_details);
 
+        ivPropImag = findViewById(R.id.ivProperty);
         tvPropertyName = findViewById(R.id.tvPropertyName);
         tvLocation = findViewById(R.id.tvLocation);
         tvPrice = findViewById(R.id.tvPriceDetails);
@@ -55,6 +63,11 @@ public class PropertyDetails extends AppCompatActivity {
         db = new RealEstateDatabaseHelper(this);
 
         int property_id = getIntent().getIntExtra("property_id", 0);
+        int propImgIdx = getIntent().getIntExtra("property_img", 0);
+
+
+
+
 
         List<Property> propertyList = db.getData();
 
@@ -65,6 +78,12 @@ public class PropertyDetails extends AppCompatActivity {
                 property = propertyList.get(i);
                 break;
             }
+        }
+
+        if(property.getCategory().toString().equals("flat")){
+            ivPropImag.setImageResource(flatsImageResources[propImgIdx]);
+        }else{
+            ivPropImag.setImageResource(housesImageResources[propImgIdx]);
         }
 
         fabBuy.setText(property.getType().toString().equals("rent")?"RENT":"BUY");
@@ -120,30 +139,7 @@ public class PropertyDetails extends AppCompatActivity {
                             }.start();
                         }})
                     .setNegativeButton(android.R.string.no, null).show();
-            Intent i=new Intent(this,BillingActivity.class);
-            progressDialog.show();
-            long duration= TimeUnit.SECONDS.toMillis(2);
-            new CountDownTimer(duration, 1000) {
-                @Override
-                public void onTick(long l) {
-                    String sDuration=String.format(Locale.ENGLISH,"%02d"
-                            , TimeUnit.MILLISECONDS.toSeconds(l));
-                }
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onFinish() {
-                    String transaction_id = String.format(Locale.UK, "%s%s", agent.getAgent_id(), LocalDate.now());
 
-//                    Calendar calendar = Calendar.getInstance();
-//                    calendar.setTime();
-//
-//                    Transactions transactions = new Transactions(transaction_id, agent.getAgent_id(), , String.valueOf(LocalDate.now()), )
-
-                    progressDialog.dismiss();
-                    finish();
-                    startActivity(i);
-                }
-            }.start();
         });
 
 

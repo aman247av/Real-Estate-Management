@@ -61,6 +61,7 @@ public class HomePage extends AppCompatActivity {
             Intent intent = new Intent(HomePage.this, Filters.class);
             startActivityForResult(intent, 0);
         });
+
     }
 
     @Override
@@ -75,6 +76,8 @@ public class HomePage extends AppCompatActivity {
                     List<Property> filteredData = db.getFilteredData(map.getString("city"), map.getString("Purpose"),map.getString("Bedrooms"), map.getString("Type"), Integer.parseInt(map.getString("minBudget")), Integer.parseInt(map.getString("maxBudget")));
 
                     System.out.println(filteredData);
+
+
 
                     adapter = new HomePageAdapter(this, filteredData);
 

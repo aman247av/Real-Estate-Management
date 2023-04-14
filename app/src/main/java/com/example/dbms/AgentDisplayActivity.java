@@ -28,7 +28,7 @@ public class AgentDisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agent_display);
 
         recyclerView = findViewById(R.id.rvProperty);
-
+        getSupportActionBar().hide();
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
