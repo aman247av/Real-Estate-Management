@@ -2,9 +2,11 @@ package com.example.dbms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.widget.TextView;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
@@ -12,8 +14,11 @@ import com.example.dbms.Model.Agent;
 import com.example.dbms.Model.Property;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 public class PropertyDetails extends AppCompatActivity {
 
@@ -71,9 +76,27 @@ public class PropertyDetails extends AppCompatActivity {
         tvCall=findViewById(R.id.tvCall);
         tvEmail=findViewById(R.id.tvEmail);
 
+        ProgressDialog progressDialog = new ProgressDialog(PropertyDetails.this);
+        progressDialog.setMessage("Processing Request...");
+        progressDialog.setCancelable(false);
+
         fabBuy.setOnClickListener(view -> {
             Intent i=new Intent(this,BillingActivity.class);
-            startActivity(i);
+            progressDialog.show();
+            long duration= TimeUnit.SECONDS.toMillis(2);
+            new CountDownTimer(duration, 1000) {
+                @Override
+                public void onTick(long l) {
+                    String sDuration=String.format(Locale.ENGLISH,"%02d"
+                            , TimeUnit.MILLISECONDS.toSeconds(l));
+                }
+                @Override
+                public void onFinish() {
+                    progressDialog.dismiss();
+                    finish();
+                    startActivity(i);
+                }
+            }.start();
         });
 
         tvCall.setOnClickListener(view -> {
