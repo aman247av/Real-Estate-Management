@@ -3,6 +3,7 @@ package com.example.dbms;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btSignIn;
 
     RealEstateDatabaseHelper db;
+
+    public static final String FILENAME = "com.example.dbms.LoginType";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +44,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginCustomer(String username, String password){
-        boolean loginSuccessful = db.authenticateUser(this, username, password);
+        int customer_id = db.authenticateUser(this, "Customer",username, password);
 
-        if(loginSuccessful){
+        if(customer_id != -1){
+            SharedPreferences.Editor editor = getSharedPreferences(FILENAME, MODE_PRIVATE).edit();
+            editor.putString("loginType", "customer");
+            editor.putString("login_id", String.valueOf(customer_id));
+            editor.apply();
             Intent intent = new Intent(LoginActivity.this, HomePage.class);
             startActivity(intent);
         }
     }
 
     public void loginAgent(String username, String password){
-        boolean loginSuccessful = db.authenticateUser(this, username, password);
+        int agent_id = db.authenticateUser(this, "Agent", username, password);
 
-        if(loginSuccessful){
+        if(agent_id != -1){
+            SharedPreferences.Editor editor = getSharedPreferences(FILENAME, MODE_PRIVATE).edit();
+            editor.putString("loginType", "agent");
+            editor.putString("login_id", String.valueOf(agent_id));
+            editor.apply();
             Intent intent = new Intent(LoginActivity.this, HomePage.class);
             startActivity(intent);
         }
