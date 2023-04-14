@@ -60,7 +60,6 @@ public class HomePage extends AppCompatActivity {
         db = new RealEstateDatabaseHelper(this);
 
         if(loginType.equals("agent")){
-
             List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);

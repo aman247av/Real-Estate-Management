@@ -78,15 +78,14 @@ public class PropertyDetails extends AppCompatActivity {
         Property property = null;
 
         for (int i = 0; i < propertyList.size(); i++){
+            System.out.println(propertyList.get(i).getProperty_id() + " " + property_id);
             if(propertyList.get(i).getProperty_id() == property_id){
-                Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
                 property = propertyList.get(i);
                 break;
             }
         }
 
-        System.out.println(propImgIdx+" THIS");
-        if(property.getCategory().toString().equals("flat")){
+        if(property.getCategory().equals("flat")){
             ivPropImag.setImageResource(flatsImageResources[propImgIdx]);
         }else{
             ivPropImag.setImageResource(housesImageResources[propImgIdx]);

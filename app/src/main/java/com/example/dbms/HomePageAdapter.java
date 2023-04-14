@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
         holder.tvAddress.setText(propDetailsList.get(position).getHouse_no() + ", " + propDetailsList.get(position).getStreet() + ", " + propDetailsList.get(position).getDistrict() + ", " + propDetailsList.get(position).getCity());
 
         int randomIndex = mRandom.nextInt(flatsImageResources.length);
-        if(propDetailsList.get(position).getCategory().toString().equals("house")){
+        if(propDetailsList.get(position).getCategory().equals("house")){
             holder.ivProperty.setImageResource(housesImageResources[randomIndex]);
         }
         else{
