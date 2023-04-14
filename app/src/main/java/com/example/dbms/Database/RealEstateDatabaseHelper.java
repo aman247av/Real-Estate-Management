@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.dbms.Model.Agent;
-import com.example.dbms.Model.Customer;
 import com.example.dbms.Model.Property;
 import com.example.dbms.Model.Transactions;
 
@@ -244,6 +243,24 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         return agent;
     }
 
+    public Agent getAgent(int agent_id){
+        Agent agent;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT * FROM Agent WHERE agent_id=%d", agent_id);
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+
+        agent = new Agent(c.getInt(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5));
+
+        return agent;
+    }
+
+
     public List<Agent> getAgentData(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -258,6 +275,27 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return agentList;
+    }
+
+    public List<Property> getAgentsProp(Agent agent){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT * FROM Agent NATURAL JOIN Assign NATURAL JOIN Property WHERE agent_id =%d", agent.getAgent_id());
+
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+
+        List<Property> agentsPropList = new ArrayList<>();
+
+        while (c.moveToNext()){
+            if(agentsPropList.isEmpty()){
+                c.moveToFirst();
+            }
+            Property agentsProp= new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+            agentsPropList.add(agentsProp);
+        }
+
+        return agentsPropList;
     }
 
 }

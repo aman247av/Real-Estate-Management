@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -28,12 +29,16 @@ public class HomePage extends AppCompatActivity {
     RealEstateDatabaseHelper db;
 
     TextView tvSearchBar;
+    public static final String FILENAME = "com.example.dbms.LoginType";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+
+
 
         getSupportActionBar().hide();
 
@@ -46,21 +51,32 @@ public class HomePage extends AppCompatActivity {
             startActivity(new Intent(this,SellPropActivity.class));
         });
 
+        SharedPreferences preferences=getSharedPreferences(FILENAME,MODE_PRIVATE);
+        String agent_id=preferences.getString("login_id",null);
+        String loginType=preferences.getString("loginType",null);
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
 
         db = new RealEstateDatabaseHelper(this);
 
-        List<Property> propertyList = db.getData();
+        if(loginType.equals("agent")){
 
-        adapter = new HomePageAdapter(this, propertyList);
+            List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
+            adapter = new HomePageAdapter(this, propertyList);
+            recyclerView.setAdapter(adapter);
 
-        recyclerView.setAdapter(adapter);
+        } else if (loginType.equals("customer")) {
 
-        tvSearchBar.setOnClickListener(v -> {
-            Intent intent = new Intent(HomePage.this, Filters.class);
-            startActivityForResult(intent, 0);
-        });
+            List<Property> propertyList = db.getData();
+            adapter = new HomePageAdapter(this, propertyList);
+            recyclerView.setAdapter(adapter);
+            tvSearchBar.setOnClickListener(v -> {
+                Intent intent = new Intent(HomePage.this, Filters.class);
+                startActivityForResult(intent, 0);
+            });
+        }
+
+
 
     }
 

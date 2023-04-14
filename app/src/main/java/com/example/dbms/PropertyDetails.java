@@ -57,6 +57,7 @@ public class PropertyDetails extends AppCompatActivity {
         setContentView(R.layout.activity_property_details);
 
         tvPropertyName = findViewById(R.id.tvPropertyName);
+        ivPropImag = findViewById(R.id.ivProperty);
         tvLocation = findViewById(R.id.tvLocation);
         tvPrice = findViewById(R.id.tvPriceDetails);
         tvCategory = findViewById(R.id.tvCategory);
@@ -72,20 +73,19 @@ public class PropertyDetails extends AppCompatActivity {
         int propImgIdx = getIntent().getIntExtra("property_img", 0);
 
 
-
-
-
         List<Property> propertyList = db.getData();
 
         Property property = null;
 
         for (int i = 0; i < propertyList.size(); i++){
             if(propertyList.get(i).getProperty_id() == property_id){
+                Toast.makeText(this, "Found", Toast.LENGTH_SHORT).show();
                 property = propertyList.get(i);
                 break;
             }
         }
 
+        System.out.println(propImgIdx+" THIS");
         if(property.getCategory().toString().equals("flat")){
             ivPropImag.setImageResource(flatsImageResources[propImgIdx]);
         }else{
