@@ -29,7 +29,7 @@ public class HomePage extends AppCompatActivity {
 
     RealEstateDatabaseHelper db;
 
-    TextView tvSearchBar;
+    TextView tvSearchBar,fabBtnSell;
     public static final String FILENAME = "com.example.dbms.LoginType";
 
 
@@ -46,7 +46,7 @@ public class HomePage extends AppCompatActivity {
         tvSearchBar = findViewById(R.id.tvSearch);
 
         recyclerView = findViewById(R.id.rvProperty);
-        TextView fabBtnSell = findViewById(R.id.tvPreview);
+        fabBtnSell = findViewById(R.id.tvPreview);
 
         fabBtnSell.setOnClickListener(view -> {
             startActivity(new Intent(this,SellPropActivity.class));
@@ -61,6 +61,10 @@ public class HomePage extends AppCompatActivity {
 
         db = new RealEstateDatabaseHelper(this);
 
+        if(!loginType.equals("customer")){
+            fabBtnSell.setVisibility(View.INVISIBLE);
+            tvSearchBar.setVisibility(View.INVISIBLE);
+        }
 
         if(agent!=null || loginType.equals("agent") ){
             if(agent!=null){
@@ -69,7 +73,7 @@ public class HomePage extends AppCompatActivity {
             List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
-            tvSearchBar.setVisibility(View.INVISIBLE);
+
 
         } else if (loginType.equals("customer")) {
 
@@ -93,7 +97,7 @@ public class HomePage extends AppCompatActivity {
             List<Property> propertyList = db.getData();
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
-            tvSearchBar.setVisibility(View.INVISIBLE);
+
         }
 
 

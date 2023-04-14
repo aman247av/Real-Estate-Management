@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,12 +67,22 @@ public class PropertyDetails extends AppCompatActivity {
         tvArea = findViewById(R.id.tvArea);
         tvAboutAgent = findViewById(R.id.tvAboutAgent);
         fabBuy = findViewById(R.id.fab_btn);
+        LinearLayout contact = findViewById(R.id.contact);
 
         db = new RealEstateDatabaseHelper(this);
 
         int property_id = getIntent().getIntExtra("property_id", 0);
         int propImgIdx = getIntent().getIntExtra("property_img", 0);
 
+
+        SharedPreferences preferences=getSharedPreferences(FILENAME,MODE_PRIVATE);
+        String loginType=preferences.getString("loginType",null);
+
+        if(!loginType.equals("customer")){
+            fabBuy.setVisibility(View.INVISIBLE);
+            contact.setVisibility(View.INVISIBLE);
+
+        }
 
         List<Property> propertyList = db.getData();
 

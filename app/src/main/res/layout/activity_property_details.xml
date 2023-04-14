@@ -321,34 +321,22 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/contact"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="10dp"
-        android:clickable="true"
-        />
-
     <TextView
         android:id="@+id/fab_btn"
-        app:layout_constraintTop_toTopOf="@id/fab"
-        app:layout_constraintStart_toStartOf="@id/fab"
-        app:layout_constraintEnd_toEndOf="@id/fab"
-        app:layout_constraintBottom_toBottomOf="@id/fab"
-        android:layout_height="0dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:background="@drawable/fab_btn"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:text="BUY"
         android:elevation="6dp"
+        android:gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="10dp"
+        android:text="BUY"
+        android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#000"
-        app:layout_anchor="@id/fab"
-        app:layout_anchorGravity="center"/>
+        app:layout_anchorGravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/contact"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
