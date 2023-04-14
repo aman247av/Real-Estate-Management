@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
 import com.example.dbms.Model.Property;
@@ -38,7 +39,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
 
-
+        String agent=getIntent().getStringExtra("agent_id");
 
         getSupportActionBar().hide();
 
@@ -52,7 +53,8 @@ public class HomePage extends AppCompatActivity {
         });
 
         SharedPreferences preferences=getSharedPreferences(FILENAME,MODE_PRIVATE);
-        String agent_id=preferences.getString("login_id",null);
+
+        String agent_id=preferences.getString("login_id",agent);
         String loginType=preferences.getString("loginType",null);
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);
@@ -60,7 +62,8 @@ public class HomePage extends AppCompatActivity {
         db = new RealEstateDatabaseHelper(this);
 
 
-        if(loginType.equals("agent") ){
+        if(agent!=null || loginType.equals("agent") ){
+            Toast.makeText(this, ""+agent+"This", Toast.LENGTH_SHORT).show();
             List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
@@ -83,6 +86,7 @@ public class HomePage extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             });
         } else if (loginType.equals("admin")) {
+            Toast.makeText(this, ""+agent+"that", Toast.LENGTH_SHORT).show();
             List<Property> propertyList = db.getData();
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
