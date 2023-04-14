@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DBMS"
         tools:targetApi="31">
+        <activity
+            android:name=".DisplayAgentProperty"
+            android:exported="false" />
+        <activity
+            android:name=".SellPropActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -42,9 +48,7 @@
         </activity>
         <activity
             android:name=".Filters"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

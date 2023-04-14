@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
 import com.example.dbms.Model.Property;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +40,11 @@ public class HomePage extends AppCompatActivity {
         tvSearchBar = findViewById(R.id.tvSearch);
 
         recyclerView = findViewById(R.id.rvProperty);
+        FloatingActionButton fabBtnSell = findViewById(R.id.fab_btn);
+
+        fabBtnSell.setOnClickListener(view -> {
+            startActivity(new Intent(this,SellPropActivity.class));
+        });
 
         GridLayoutManager layoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(layoutManager);

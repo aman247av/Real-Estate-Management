@@ -57,6 +57,33 @@
                 app:layout_constraintStart_toEndOf="@id/logo"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_margin="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                app:layout_constraintTop_toTopOf="@id/fab_btn"
+                app:layout_constraintStart_toStartOf="@id/fab_btn"
+                app:layout_constraintEnd_toEndOf="@id/fab_btn"
+                app:layout_constraintBottom_toBottomOf="@id/fab_btn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="SELL"
+                android:elevation="6dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                app:layout_anchor="@id/fab_btn"
+                app:layout_anchorGravity="center"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -88,23 +115,35 @@
             </TextView>
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="16dp"
-
                 android:drawableLeft="@drawable/drop_down_24"
-
                 android:text="Buy"
                 android:textColor="#3C3C3C"
                 android:textSize="20sp"
+                android:paddingHorizontal="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvClear"
+                app:layout_constraintTop_toTopOf="@+id/tvSearch" />
+
+            <TextView
+                android:id="@+id/tvClear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:drawableStart="@android:drawable/ic_menu_close_clear_cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintTop_toTopOf="@+id/tvSearch" />
 
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
     </LinearLayout>
@@ -114,7 +153,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
