@@ -77,10 +77,10 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean authenticateUser(Context context, String username, String password){
+    public int authenticateUser(Context context, String table, String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = String.format(Locale.UK, "SELECT username,password FROM Customer WHERE username=\"%s\";", username);
+        String query = String.format(Locale.UK, "SELECT * FROM \"%s\" WHERE email=\"%s\";", table,username);
 
         Cursor c = db.rawQuery(query, null);
 
@@ -89,23 +89,23 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         c.moveToFirst();
 
         if(checkUser > 0){
-            String realPassword = c.getString(1);
+            String realPassword = c.getString(3);
 
             if(password.equals(realPassword)){
                 Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
                 db.close();
-                return true;
+                return c.getInt(0);
             }
             else{
                 Toast.makeText(context, "Wrong password!", Toast.LENGTH_SHORT).show();
                 db.close();
-                return false;
+                return -1;
             }
         }
         else{
             Toast.makeText(context, "This username does not exist", Toast.LENGTH_SHORT).show();
             db.close();
-            return false;
+            return -1;
         }
     }
 
@@ -124,6 +124,8 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = String.format(Locale.UK, "INSERT INTO Transactions VALUES(%d, %d, %d, \"%s\", \"%s\", %d)", transactions.getTransaction_id(), transactions.getAgent_id(),transactions.getCustomer_id(),transactions.getDateFrom(),transactions.getDateTo(),transactions.getAmount());
+
+        db.execSQL(query);
     }
 
     @SuppressLint("Range")
