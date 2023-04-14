@@ -63,7 +63,10 @@ public class HomePage extends AppCompatActivity {
 
 
         if(agent!=null || loginType.equals("agent") ){
-            Toast.makeText(this, ""+agent+"This", Toast.LENGTH_SHORT).show();
+            if(agent!=null){
+                agent_id=agent;
+            }
+            Toast.makeText(this, ""+agent+"This"+agent_id, Toast.LENGTH_SHORT).show();
             List<Property> propertyList = db.getAgentsProp(db.getAgent(Integer.parseInt(agent_id)));
             adapter = new HomePageAdapter(this, propertyList);
             recyclerView.setAdapter(adapter);
