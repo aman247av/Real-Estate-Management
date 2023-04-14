@@ -89,7 +89,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         c.moveToFirst();
 
         if(checkUser > 0){
-            String realPassword = c.getString(3);
+            String realPassword = c.getString(c.getColumnIndex("password"));
 
             if(password.equals(realPassword)){
                 Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
@@ -107,6 +107,18 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
             db.close();
             return -1;
         }
+    }
+
+    public String getCustomer(int customer_id){
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = String.format(Locale.UK, "SELECT * FROM Customer WHERE customer_id=%d", customer_id);
+
+        Cursor c = db.rawQuery(query, null);
+
+        c.moveToFirst();
+
+        return c.getString(2);
     }
 
     public void sellProperty(Property property){
