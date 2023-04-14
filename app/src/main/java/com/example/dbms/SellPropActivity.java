@@ -1,20 +1,16 @@
 package com.example.dbms;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dbms.Database.RealEstateDatabaseHelper;
 import com.example.dbms.Model.Property;
@@ -24,7 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-import java.util.Locale;
 
 public class SellPropActivity extends AppCompatActivity {
     private final static int MY_REQUEST_CODE = 1;
