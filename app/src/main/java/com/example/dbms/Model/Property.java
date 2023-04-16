@@ -13,7 +13,7 @@ public class Property {
     Image image;
     String category;
     int construction_year;
-    int rent;
+    int lease;
     int selling_price;
     String status;
     String house_no;
@@ -24,7 +24,7 @@ public class Property {
     String state;
     int pincode;
 
-    public Property(int property_id, String propertyName, String type, int area_size, int bedroom_count, String category, int construction_year, int rent, int selling_price, String status, String house_no, String street, String district, String city, String state, int pincode, String dateListed) {
+    public Property(int property_id, String propertyName, String type, int area_size, int bedroom_count, String category, int construction_year, int lease, int selling_price, String status, String house_no, String street, String district, String city, String state, int pincode, String dateListed) {
         this.property_id = property_id;
         this.propertyName = propertyName;
         this.type = type;
@@ -32,7 +32,7 @@ public class Property {
         this.bedroom_count = bedroom_count;
         this.category = category;
         this.construction_year = construction_year;
-        this.rent = rent;
+        this.lease = lease;
         this.selling_price = selling_price;
         this.status = status;
         this.house_no = house_no;
@@ -109,11 +109,11 @@ public class Property {
     }
 
     public int getRent() {
-        return rent;
+        return lease;
     }
 
-    public void setRent(int rent) {
-        this.rent = rent;
+    public void setRent(int lease) {
+        this.lease = lease;
     }
 
     public int getSelling_price() {

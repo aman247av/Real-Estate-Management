@@ -64,7 +64,7 @@ public class Filters extends AppCompatActivity {
         });
 
         tvRent.setOnClickListener(view -> {
-            bundle.putString("Purpose","rent");
+            bundle.putString("Purpose","lease");
             tvRent.setBackgroundResource(R.color.btnColor);
             tvBuy.setBackgroundResource(R.color.white);
         });

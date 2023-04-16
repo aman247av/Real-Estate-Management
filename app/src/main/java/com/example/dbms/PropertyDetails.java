@@ -102,7 +102,7 @@ public class PropertyDetails extends AppCompatActivity {
             ivPropImag.setImageResource(housesImageResources[propImgIdx]);
         }
 
-        fabBuy.setText(property.getType().toString().equals("rent")?"RENT":"BUY");
+        fabBuy.setText(property.getType().toString().equals("lease")?"RENT":"BUY");
 
         tvPropertyName.setText(property.getPropertyName());
         tvType.setText(property.getType());
@@ -131,7 +131,7 @@ public class PropertyDetails extends AppCompatActivity {
 //            startActivity(new Intent(this,AgentDisplayActivity.class));
             new AlertDialog.Builder(this)
                     .setTitle("Proceed Further")
-                    .setMessage("Do you really want to buy/rent this Property?")
+                    .setMessage("Do you really want to buy/lease this Property?")
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -166,7 +166,7 @@ public class PropertyDetails extends AppCompatActivity {
                                     i.putExtra("customer_id", customer_id);
 
 
-                                    if(finalProperty.getType().equals("rent")){
+                                    if(finalProperty.getType().equals("lease")){
 
                                         Calendar c = Calendar.getInstance();
 

@@ -77,8 +77,8 @@ public class SellPropActivity extends AppCompatActivity {
         });
 
         tvRent.setOnClickListener(view -> {
-            hashMap.put("type","rent");
-            type[0]="rent";
+            hashMap.put("type","lease");
+            type[0]="lease";
             tvRent.setBackgroundResource(R.color.btnColor);
             tvSell.setBackgroundResource(R.color.white);
         });
@@ -165,16 +165,16 @@ public class SellPropActivity extends AppCompatActivity {
 
 
 
-                //rent (Done)
+                //lease (Done)
                 if(etPrice.getText().toString().isEmpty()){
                     etPrice.requestFocus();
                 }
                 else {
                     if (type[0].equals("sale")) {
                         hashMap.put("selling_price", etPrice.getText().toString());
-                        hashMap.put("rent", String.valueOf((Integer.parseInt(etPrice.getText().toString()) * 0.002)));
+                        hashMap.put("lease", String.valueOf((Integer.parseInt(etPrice.getText().toString()) * 0.002)));
                     } else {
-                        hashMap.put("rent", etPrice.getText().toString());
+                        hashMap.put("lease", etPrice.getText().toString());
                         hashMap.put("selling_price", String.valueOf(Integer.parseInt(etPrice.getText().toString()) * 200));
                     }
                 }
@@ -222,7 +222,7 @@ public class SellPropActivity extends AppCompatActivity {
                 else{
                     int property_id = Integer.parseInt(String.format(Locale.UK,"%s%s", hashMap.get("house_no"), hashMap.get("pincode")));
 
-                    Property property = new Property(property_id, hashMap.get("p_name"), hashMap.get("type"), Integer.parseInt(hashMap.get("area_size")), Integer.parseInt(hashMap.get("no_of_bedrooms")), hashMap.get("category"), Integer.parseInt(hashMap.get("year_of_const")), (int) Double.parseDouble(hashMap.get("rent")), (int) Double.parseDouble(hashMap.get("selling_price")), hashMap.get("status"), hashMap.get("house_no"), hashMap.get("street"), hashMap.get("district"), hashMap.get("city"), hashMap.get("state"), Integer.parseInt(hashMap.get("pincode")), hashMap.get("dateListed"));
+                    Property property = new Property(property_id, hashMap.get("p_name"), hashMap.get("type"), Integer.parseInt(hashMap.get("area_size")), Integer.parseInt(hashMap.get("no_of_bedrooms")), hashMap.get("category"), Integer.parseInt(hashMap.get("year_of_const")), (int) Double.parseDouble(hashMap.get("lease")), (int) Double.parseDouble(hashMap.get("selling_price")), hashMap.get("status"), hashMap.get("house_no"), hashMap.get("street"), hashMap.get("district"), hashMap.get("city"), hashMap.get("state"), Integer.parseInt(hashMap.get("pincode")), hashMap.get("dateListed"));
 
                     db.sellProperty(property);
 

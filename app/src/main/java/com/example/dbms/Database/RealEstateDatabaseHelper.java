@@ -51,7 +51,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
                 " image mediumblob," +
                 " category varchar(50)," +
                 " construction_year int," +
-                " rent int," +
+                " lease int," +
                 " selling_price int," +
                 " status varchar(15)," +
                 " house_no varchar(10)," +
@@ -88,7 +88,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         c.moveToFirst();
 
         if(checkUser > 0){
-            String realPassword = c.getString(c.getColumnIndex("password"));
+            String realPassword = c.getString(c.getColumnIndexOrThrow("password"));
 
             if(password.equals(realPassword)){
                 Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show();
@@ -156,16 +156,16 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
 
         while (c.moveToNext()){
             Property property;
-            if(c.getString(c.getColumnIndex("type")).equals("rent")) {
-                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("rent")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+            if(c.getString(c.getColumnIndexOrThrow("type")).equals("lease")) {
+                property = new Property(c.getInt(0), c.getString(c.getColumnIndexOrThrow("p_name")), c.getString(c.getColumnIndexOrThrow("type")), c.getInt(c.getColumnIndexOrThrow("area_size")), c.getInt(c.getColumnIndexOrThrow("no_of_bedrooms")), c.getString(c.getColumnIndexOrThrow("category")), c.getInt(c.getColumnIndexOrThrow("year_of_const")), c.getInt(c.getColumnIndexOrThrow("rent")), c.getInt(c.getColumnIndexOrThrow("rent")), c.getString(c.getColumnIndexOrThrow("status")), c.getString(c.getColumnIndexOrThrow("house_no")), c.getString(c.getColumnIndexOrThrow("street")), c.getString(c.getColumnIndexOrThrow("district")), c.getString(c.getColumnIndexOrThrow("city")), c.getString(c.getColumnIndexOrThrow("state")), c.getInt(c.getColumnIndexOrThrow("pincode")), c.getString(c.getColumnIndexOrThrow("dateListed")));
             }
             else{
-                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+                property = new Property(c.getInt(0), c.getString(c.getColumnIndexOrThrow("p_name")), c.getString(c.getColumnIndexOrThrow("type")), c.getInt(c.getColumnIndexOrThrow("area_size")), c.getInt(c.getColumnIndexOrThrow("no_of_bedrooms")), c.getString(c.getColumnIndexOrThrow("category")), c.getInt(c.getColumnIndexOrThrow("year_of_const")), c.getInt(c.getColumnIndexOrThrow("selling_price")), c.getInt(c.getColumnIndexOrThrow("selling_price")), c.getString(c.getColumnIndexOrThrow("status")), c.getString(c.getColumnIndexOrThrow("house_no")), c.getString(c.getColumnIndexOrThrow("street")), c.getString(c.getColumnIndexOrThrow("district")), c.getString(c.getColumnIndexOrThrow("city")), c.getString(c.getColumnIndexOrThrow("state")), c.getInt(c.getColumnIndexOrThrow("pincode")), c.getString(c.getColumnIndexOrThrow("dateListed")));
             }
             propertyList.add(property);
         }
 
-//        db.close();
+        db.close();
 
         return propertyList;
     }
@@ -195,7 +195,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query;
-        if(type.equals("rent")) {
+        if(type.equals("lease")) {
             query = String.format(Locale.UK, "SELECT * FROM Property WHERE city=\"%s\" AND type=\"%s\" AND no_of_bedrooms=%d AND category=\"%s\" AND rent >= %d AND rent <= %d", city, type, bedrooms, category, minPrice, maxPrice);
         }
         else {
@@ -213,10 +213,10 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
         while (true){
             Property property;
             if(c.getCount() > 0) {
-                if (c.getString(c.getColumnIndex("type")).equals("rent")) {
-                    property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("rent")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+                if (c.getString(c.getColumnIndexOrThrow("type")).equals("lease")) {
+                    property = new Property(c.getInt(0), c.getString(c.getColumnIndexOrThrow("p_name")), c.getString(c.getColumnIndexOrThrow("type")), c.getInt(c.getColumnIndexOrThrow("area_size")), c.getInt(c.getColumnIndexOrThrow("no_of_bedrooms")), c.getString(c.getColumnIndexOrThrow("category")), c.getInt(c.getColumnIndexOrThrow("year_of_const")), c.getInt(c.getColumnIndexOrThrow("rent")), c.getInt(c.getColumnIndexOrThrow("rent")), c.getString(c.getColumnIndexOrThrow("status")), c.getString(c.getColumnIndexOrThrow("house_no")), c.getString(c.getColumnIndexOrThrow("street")), c.getString(c.getColumnIndexOrThrow("district")), c.getString(c.getColumnIndexOrThrow("city")), c.getString(c.getColumnIndexOrThrow("state")), c.getInt(c.getColumnIndexOrThrow("pincode")), c.getString(c.getColumnIndexOrThrow("dateListed")));
                 } else {
-                    property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+                    property = new Property(c.getInt(0), c.getString(c.getColumnIndexOrThrow("p_name")), c.getString(c.getColumnIndexOrThrow("type")), c.getInt(c.getColumnIndexOrThrow("area_size")), c.getInt(c.getColumnIndexOrThrow("no_of_bedrooms")), c.getString(c.getColumnIndexOrThrow("category")), c.getInt(c.getColumnIndexOrThrow("year_of_const")), c.getInt(c.getColumnIndexOrThrow("selling_price")), c.getInt(c.getColumnIndexOrThrow("selling_price")), c.getString(c.getColumnIndexOrThrow("status")), c.getString(c.getColumnIndexOrThrow("house_no")), c.getString(c.getColumnIndexOrThrow("street")), c.getString(c.getColumnIndexOrThrow("district")), c.getString(c.getColumnIndexOrThrow("city")), c.getString(c.getColumnIndexOrThrow("state")), c.getInt(c.getColumnIndexOrThrow("pincode")), c.getString(c.getColumnIndexOrThrow("dateListed")));
                 }
                 propertyList.add(property);
             }
@@ -303,7 +303,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
             if(agentsPropList.isEmpty()){
                 c.moveToFirst();
             }
-            Property agentsProp= new Property(c.getInt(c.getColumnIndex("property_id")), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+            Property agentsProp= new Property(c.getInt(c.getColumnIndexOrThrow("property_id")), c.getString(c.getColumnIndexOrThrow("p_name")), c.getString(c.getColumnIndexOrThrow("type")), c.getInt(c.getColumnIndexOrThrow("area_size")), c.getInt(c.getColumnIndexOrThrow("no_of_bedrooms")), c.getString(c.getColumnIndexOrThrow("category")), c.getInt(c.getColumnIndexOrThrow("year_of_const")), c.getInt(c.getColumnIndexOrThrow("selling_price")), c.getInt(c.getColumnIndexOrThrow("selling_price")), c.getString(c.getColumnIndexOrThrow("status")), c.getString(c.getColumnIndexOrThrow("house_no")), c.getString(c.getColumnIndexOrThrow("street")), c.getString(c.getColumnIndexOrThrow("district")), c.getString(c.getColumnIndexOrThrow("city")), c.getString(c.getColumnIndexOrThrow("state")), c.getInt(c.getColumnIndexOrThrow("pincode")), c.getString(c.getColumnIndexOrThrow("dateListed")));
             agentsPropList.add(agentsProp);
         }
 
