@@ -112,11 +112,9 @@ public class HomePage extends AppCompatActivity {
                 if(data != null){
                     Bundle map = data.getBundleExtra("filterDetails");
 
-                    List<Property> filteredData = db.getFilteredData(map.getString("city"), map.getString("Purpose"),map.getString("Bedrooms"), map.getString("Type"), Integer.parseInt(map.getString("minBudget")), Integer.parseInt(map.getString("maxBudget")));
+                    List<Property> filteredData = db.getFilteredData(map.getString("city"), map.getString("Purpose"), Integer.parseInt(map.getString("Bedrooms")), map.getString("Type"), Integer.parseInt(map.getString("minBudget")), Integer.parseInt(map.getString("maxBudget")));
 
                     System.out.println(filteredData);
-
-
 
                     adapter = new HomePageAdapter(this, filteredData);
 

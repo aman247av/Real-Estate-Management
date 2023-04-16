@@ -50,7 +50,7 @@ public class Filters extends AppCompatActivity {
             }
         });
         tvBuy.setBackgroundResource(R.color.btnColor);
-        bundle.putString("Purpose","buy");
+        bundle.putString("Purpose","sale");
         tvHouse.setBackgroundResource(R.color.btnColor);
         bundle.putString("Type","house");
         tv_1BHK.setBackgroundResource(R.color.btnColor);
@@ -58,13 +58,13 @@ public class Filters extends AppCompatActivity {
 
 
         tvBuy.setOnClickListener(view -> {
-            bundle.putString("Purpose","buy");
+            bundle.putString("Purpose","sale");
             tvBuy.setBackgroundResource(R.color.btnColor);
             tvRent.setBackgroundResource(R.color.white);
         });
 
         tvRent.setOnClickListener(view -> {
-            bundle.putString("Purpose","Rent");
+            bundle.putString("Purpose","rent");
             tvRent.setBackgroundResource(R.color.btnColor);
             tvBuy.setBackgroundResource(R.color.white);
         });
@@ -137,6 +137,8 @@ public class Filters extends AppCompatActivity {
                         bundle.putString("city", tvSearchLoc.getText().toString().trim());
 
                         System.out.println(bundle);
+
+                        System.out.println(bundle.getString("minBudget") + " " + bundle.getString("maxBudget"));
 
                         Intent intent = new Intent();
                         intent.putExtra("filterDetails", bundle);

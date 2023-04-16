@@ -191,29 +191,38 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<Property> getFilteredData(String city, String type, String bedrooms, String category, int minPrice, int maxPrice){
+    public List<Property> getFilteredData(String city, String type, int bedrooms, String category, int minPrice, int maxPrice){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = String.format(Locale.UK, "SELECT * FROM Property WHERE city=\"%s\" AND type=\"%s\" AND no_of_bedrooms=\"%s\" AND category=\"%s\" AND selling_price >= %d AND selling_price <= %d", city, type,bedrooms,category,minPrice,maxPrice);
+        String query;
+        if(type.equals("rent")) {
+            query = String.format(Locale.UK, "SELECT * FROM Property WHERE city=\"%s\" AND type=\"%s\" AND no_of_bedrooms=%d AND category=\"%s\" AND rent >= %d AND rent <= %d", city, type, bedrooms, category, minPrice, maxPrice);
+        }
+        else {
+            query = String.format(Locale.UK, "SELECT * FROM Property WHERE city=\"%s\" AND type=\"%s\" AND no_of_bedrooms=%d AND category=\"%s\" AND selling_price >= %d AND selling_price <= %d", city, type, bedrooms, category, minPrice, maxPrice);
+        }
 
         Cursor c = db.rawQuery(query, null);
+
+        System.out.println(c.getCount()+"");
 
         c.moveToFirst();
 
         List<Property> propertyList = new ArrayList<>();
 
-        while (c.moveToNext()){
-            if(propertyList.isEmpty()){
-                c.moveToFirst();
-            }
+        while (true){
             Property property;
-            if(c.getString(c.getColumnIndex("type")).equals("rent")) {
-                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("rent")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+            if(c.getCount() > 0) {
+                if (c.getString(c.getColumnIndex("type")).equals("rent")) {
+                    property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("rent")), c.getInt(c.getColumnIndex("rent")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+                } else {
+                    property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+                }
+                propertyList.add(property);
             }
-            else{
-                property = new Property(c.getInt(0), c.getString(c.getColumnIndex("p_name")), c.getString(c.getColumnIndex("type")), c.getInt(c.getColumnIndex("area_size")), c.getInt(c.getColumnIndex("no_of_bedrooms")), c.getString(c.getColumnIndex("category")), c.getInt(c.getColumnIndex("year_of_const")), c.getInt(c.getColumnIndex("selling_price")), c.getInt(c.getColumnIndex("selling_price")), c.getString(c.getColumnIndex("status")), c.getString(c.getColumnIndex("house_no")), c.getString(c.getColumnIndex("street")), c.getString(c.getColumnIndex("district")), c.getString(c.getColumnIndex("city")), c.getString(c.getColumnIndex("state")), c.getInt(c.getColumnIndex("pincode")), c.getString(c.getColumnIndex("dateListed")));
+            if(!c.moveToNext()){
+                break;
             }
-            propertyList.add(property);
         }
 
         db.close();
