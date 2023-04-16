@@ -126,139 +126,137 @@ public class SellPropActivity extends AppCompatActivity {
 
 
 
-        btn_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_list.setOnClickListener(view -> {
 
-                boolean check=true;
+            boolean check=true;
 
-                if(etPropName.getText().toString().isEmpty()){
-                    etPropName.requestFocus();
-                }else{
-                    //propertyName
-                    hashMap.put("p_name",etPropName.getText().toString());
-                }
+            if(etPropName.getText().toString().isEmpty()){
+                etPropName.requestFocus();
+            }else{
+                //propertyName
+                hashMap.put("p_name",etPropName.getText().toString());
+            }
 
-                if(tvSearchLoc.getText().toString().isEmpty()){
+            if(tvSearchLoc.getText().toString().isEmpty()){
+                tvSearchLoc.requestFocus();
+            }else{
+                //address (Partially)
+                String[] address=tvSearchLoc.getText().toString().split(",");
+                if(address.length!=6){
+                    Toast.makeText(SellPropActivity.this, "Invalid Format", Toast.LENGTH_SHORT).show();
                     tvSearchLoc.requestFocus();
-                }else{
-                    //address (Partially)
-                    String[] address=tvSearchLoc.getText().toString().split(",");
-                    if(address.length!=6){
-                        Toast.makeText(SellPropActivity.this, "Invalid Format", Toast.LENGTH_SHORT).show();
-                        tvSearchLoc.requestFocus();
-                    }
-                    else{
-                        hashMap.put("house_no",address[0].trim());
-                        hashMap.put("street",address[1].trim());
-                        hashMap.put("district",address[2].trim());
-                        hashMap.put("city",address[3].trim());
-                        hashMap.put("state",address[4].trim());
-                        hashMap.put("pincode",address[5].trim());
-                    }
-                }
-
-
-                if(!hashMap.containsKey("type")){
-                    Toast.makeText(SellPropActivity.this, "Purpose not set!", Toast.LENGTH_SHORT).show();
-                }
-
-
-
-                //lease (Done)
-                if(etPrice.getText().toString().isEmpty()){
-                    etPrice.requestFocus();
-                }
-                else {
-                    if (type[0].equals("sale")) {
-                        hashMap.put("selling_price", etPrice.getText().toString());
-                        hashMap.put("lease", String.valueOf((Integer.parseInt(etPrice.getText().toString()) * 0.002)));
-                    } else {
-                        hashMap.put("lease", etPrice.getText().toString());
-                        hashMap.put("selling_price", String.valueOf(Integer.parseInt(etPrice.getText().toString()) * 200));
-                    }
-                }
-
-                //status (Done)
-                hashMap.put("status", String.valueOf(0));
-
-                if(etYOC.getText().toString().isEmpty()){
-                    etYOC.requestFocus();
-                    check=false;
-                }else {
-                    //YOC
-                    hashMap.put("year_of_const", etYOC.getText().toString());
-                }
-                //category (Above Done)
-
-                //type (Above)
-                if(etArea.getText().toString().isEmpty()){
-                    etArea.requestFocus();
-                }else {
-                    //area
-                    hashMap.put("area_size",etArea.getText().toString());
-                }
-
-                //dateList
-                Date cDate = new Date();
-                String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
-                hashMap.put("dateList",fDate);
-
-                if(etPropName.getText().toString().isEmpty()){
-                    etPropName.requestFocus();
-                }else {
-                    //propertyName
-                    hashMap.put("p_name",etPropName.getText().toString());
-                }
-
-
-
-
-                System.out.println(hashMap);
-
-                if(hashMap.size()!=16){
-                    Toast.makeText(SellPropActivity.this, "Incomplete Details!", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    int property_id = Integer.parseInt(String.format(Locale.UK,"%s%s", hashMap.get("house_no"), hashMap.get("pincode")));
-
-                    Property property = new Property(property_id, hashMap.get("p_name"), hashMap.get("type"), Integer.parseInt(hashMap.get("area_size")), Integer.parseInt(hashMap.get("no_of_bedrooms")), hashMap.get("category"), Integer.parseInt(hashMap.get("year_of_const")), (int) Double.parseDouble(hashMap.get("lease")), (int) Double.parseDouble(hashMap.get("selling_price")), hashMap.get("status"), hashMap.get("house_no"), hashMap.get("street"), hashMap.get("district"), hashMap.get("city"), hashMap.get("state"), Integer.parseInt(hashMap.get("pincode")), hashMap.get("dateListed"));
-
-                    db.sellProperty(property);
-
-                    Intent intent = new Intent(SellPropActivity.this, HomePage.class);
-                    startActivity(intent);
-                    finish();
-
-
-
-                    Toast.makeText(SellPropActivity.this, "All OK", Toast.LENGTH_SHORT).show();
-
-
-                    progressDialog.show();
-                    long duration= TimeUnit.SECONDS.toMillis(2);
-                    new CountDownTimer(duration, 1000) {
-                        @Override
-                        public void onTick(long l) {
-                            String sDuration = String.format(Locale.ENGLISH, "%02d"
-                                    , TimeUnit.MILLISECONDS.toSeconds(l));
-                        }
-
-                        @Override
-                        public void onFinish() {
-
-                            progressDialog.dismiss();
-                            startActivity(new Intent(SellPropActivity.this,ListingActivity.class));
-                            finish();
-                        }
-                    }.start();
-
-
+                    hashMap.put("house_no",address[0].trim());
+                    hashMap.put("street",address[1].trim());
+                    hashMap.put("district",address[2].trim());
+                    hashMap.put("city",address[3].trim());
+                    hashMap.put("state",address[4].trim());
+                    hashMap.put("pincode",address[5].trim());
                 }
-                
-                
+            }
 
-                
+
+            if(!hashMap.containsKey("type")){
+                Toast.makeText(SellPropActivity.this, "Purpose not set!", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+            //lease (Done)
+            if(etPrice.getText().toString().isEmpty()){
+                etPrice.requestFocus();
+            }
+            else {
+                if (type[0].equals("sale")) {
+                    hashMap.put("selling_price", etPrice.getText().toString());
+                    hashMap.put("lease", String.valueOf((Integer.parseInt(etPrice.getText().toString()) * 0.002)));
+                } else {
+                    hashMap.put("lease", etPrice.getText().toString());
+                    hashMap.put("selling_price", String.valueOf(Integer.parseInt(etPrice.getText().toString()) * 200));
+                }
+            }
+
+            //status (Done)
+            hashMap.put("status", String.valueOf(0));
+
+            if(etYOC.getText().toString().isEmpty()){
+                etYOC.requestFocus();
+                check=false;
+            }else {
+                //YOC
+                hashMap.put("year_of_const", etYOC.getText().toString());
+            }
+            //category (Above Done)
+
+            //type (Above)
+            if(etArea.getText().toString().isEmpty()){
+                etArea.requestFocus();
+            }else {
+                //area
+                hashMap.put("area_size",etArea.getText().toString());
+            }
+
+            //dateList
+            Date cDate = new Date();
+            String fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
+            hashMap.put("dateList",fDate);
+
+            if(etPropName.getText().toString().isEmpty()){
+                etPropName.requestFocus();
+            }else {
+                //propertyName
+                hashMap.put("p_name",etPropName.getText().toString());
+            }
+
+
+
+
+            System.out.println(hashMap);
+
+            if(hashMap.size()!=16){
+                Toast.makeText(SellPropActivity.this, "Incomplete Details!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                int property_id = Integer.parseInt(String.format(Locale.UK,"%s%s", hashMap.get("house_no"), hashMap.get("pincode")));
+
+                Property property = new Property(property_id, hashMap.get("p_name"), hashMap.get("type"), Integer.parseInt(hashMap.get("area_size")), Integer.parseInt(hashMap.get("no_of_bedrooms")), hashMap.get("category"), Integer.parseInt(hashMap.get("year_of_const")), (int) Double.parseDouble(hashMap.get("lease")), (int) Double.parseDouble(hashMap.get("selling_price")), hashMap.get("status"), hashMap.get("house_no"), hashMap.get("street"), hashMap.get("district"), hashMap.get("city"), hashMap.get("state"), Integer.parseInt(hashMap.get("pincode")), hashMap.get("dateList"));
+
+                db.sellProperty(property);
+
+                Intent intent = new Intent(SellPropActivity.this, HomePage.class);
+                startActivity(intent);
+                finish();
+
+
+
+                Toast.makeText(SellPropActivity.this, "All OK", Toast.LENGTH_SHORT).show();
+
+
+                progressDialog.show();
+                long duration= TimeUnit.SECONDS.toMillis(2);
+                new CountDownTimer(duration, 1000) {
+                    @Override
+                    public void onTick(long l) {
+                        String sDuration = String.format(Locale.ENGLISH, "%02d"
+                                , TimeUnit.MILLISECONDS.toSeconds(l));
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                        progressDialog.dismiss();
+                        startActivity(new Intent(SellPropActivity.this,ListingActivity.class));
+                        finish();
+                    }
+                }.start();
+
+
+            }
+
+
+
+
 //                String[] minBudget = spinner_min_budget.getSelectedItem().toString().split(" ");
 //                String[] maxBudget = spinner_max_budget.getSelectedItem().toString().split(" ");
 //
@@ -281,7 +279,6 @@ public class SellPropActivity extends AppCompatActivity {
 //                }else{
 //                    Toast.makeText(Filters.this, "Invalid Location", Toast.LENGTH_SHORT).show();
 //                }
-            }
         });
 
 

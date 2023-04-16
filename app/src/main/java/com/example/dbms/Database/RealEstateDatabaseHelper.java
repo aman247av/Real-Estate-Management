@@ -123,7 +123,7 @@ public class RealEstateDatabaseHelper extends SQLiteOpenHelper {
     public void sellProperty(Property property){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = String.format(Locale.UK, "INSERT INTO Property VALUES(%d, %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d, %d, %d, \"%s\", %d, \"%s\", \"%s\", %d, \"%s\", \"%s\")", property.getProperty_id(), property.getBedroom_count(), property.getHouse_no(), property.getStreet(), property.getDistrict(), property.getCity(), property.getState(), property.getPincode(), property.getRent(), property.getSelling_price(), property.getStatus(), property.getConstruction_year(), property.getCategory(), property.getType(), property.getArea_size(), property.getDateListed(), property.getPropertyName());
+        String query = String.format(Locale.UK, "INSERT INTO Property VALUES(%d, %d, \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d, %d, %d, \"%s\", %d, \"%s\", \"%s\", %d, strftime(\"%s\", \"%s\"), \"%s\")", property.getProperty_id(), property.getBedroom_count(), property.getHouse_no(), property.getStreet(), property.getDistrict(), property.getCity(), property.getState(), property.getPincode(), property.getRent(), property.getSelling_price(), property.getStatus(), property.getConstruction_year(), property.getCategory(), property.getType(), property.getArea_size(), "%Y-%m-%d", property.getDateListed(), property.getPropertyName());
 
         String query1 = String.format(Locale.UK, "INSERT INTO Assign VALUES(%d, %d)", property.getProperty_id(), (int) ((Math.random() * (18 - 1)) + 1));
 
